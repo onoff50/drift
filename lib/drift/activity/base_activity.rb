@@ -2,15 +2,10 @@ module Drift
 
   class BaseActivity
 
-    attr_accessor :name, :desc
-
-    def initialize(name, desc)
-      @name = name
-      @desc = desc
-    end
-
-    def run
-      raise "Not Implemented"
+    class << self
+      def execute(args = {})
+        raise "Not Implemented"
+      end
     end
 
   end
