@@ -26,13 +26,6 @@ end
 
 class SwitchActorTest < BaseDriftTest
 
-  setup do
-    @activity1 = SampleTestActivity1.new
-    @activity2 = SampleTestActivity2.new
-    @activity3 = SampleTestActivity3.new
-    @defaultActivity = SampleTestActivity4.new
-  end
-
   def test_switching_action_act_on_2_for_beta
     switchActor = Drift::SwitchActor.new({'alpha' => SampleTestActivity1, 'beta' => SampleTestActivity2, 'gamma' => SampleTestActivity3, :default => SampleTestActivity4}) do
       'beta'
