@@ -1,27 +1,27 @@
 require File.expand_path(File.dirname(__FILE__) + '/../base_drift_test')
 
 class SampleTestActivity1 < Drift::BaseActivity
-    def execute(args = {})
-      "SAMPLE TEST ACTIVITY 1"
-    end
+  def self.execute(args = {})
+    "SAMPLE TEST ACTIVITY 1"
+  end
 end
 
-class SampleTestActivity2  < Drift::BaseActivity
-    def execute(args = {})
-      "SAMPLE TEST ACTIVITY 2"
-    end
+class SampleTestActivity2 < Drift::BaseActivity
+  def self.execute(args = {})
+    "SAMPLE TEST ACTIVITY 2"
+  end
 end
 
 class SampleTestActivity3 < Drift::BaseActivity
-    def execute(args = {})
-      "SAMPLE TEST ACTIVITY 3"
-    end
+  def self.execute(args = {})
+    "SAMPLE TEST ACTIVITY 3"
+  end
 end
 
 class SampleTestActivity4 < Drift::BaseActivity
-    def execute(args = {})
-      "SAMPLE TEST ACTIVITY 4"
-    end
+  def self.execute(args = {})
+    "SAMPLE TEST ACTIVITY 4"
+  end
 end
 
 class SwitchActorTest < BaseDriftTest
@@ -33,24 +33,28 @@ class SwitchActorTest < BaseDriftTest
     @defaultActivity = SampleTestActivity4.new
   end
 
-  def test_switching_action
-    switchActor = Drift::SwitchActor.new({'alpha' => @activity1, 'beta' => @activity2, 'gamma' => @activity3, :default => @defaultActivity}) do
+  def test_switching_action_act_on_2_for_beta
+    switchActor = Drift::SwitchActor.new({'alpha' => SampleTestActivity1, 'beta' => SampleTestActivity2, 'gamma' => SampleTestActivity3, :default => SampleTestActivity4}) do
       'beta'
     end
     a = switchActor.act({})
     assert_equal 'SAMPLE TEST ACTIVITY 2', a
+  end
 
-    switchActor = Drift::SwitchActor.new({'alpha' => @activity1, 'beta' => @activity2, 'gamma' => @activity3, :default => @defaultActivity}) do
+  def test_switching_action_act_on_4_for_other
+    switchActor = Drift::SwitchActor.new({'alpha' => SampleTestActivity1, 'beta' => SampleTestActivity2, 'gamma' => SampleTestActivity3, :default => SampleTestActivity4}) do
       'other'
     end
     a = switchActor.act({})
     assert_equal 'SAMPLE TEST ACTIVITY 4', a
+  end
 
-    switchActor = Drift::SwitchActor.new({'alpha' => @activity1, 'beta' => @activity2, 'gamma' => @activity3, :default => @defaultActivity}) do
-      'default'
+  def test_switching_action_act_on_4_for_default
+   switchActor = Drift::SwitchActor.new({'alpha' => SampleTestActivity1, 'beta' => SampleTestActivity2, 'gamma' => SampleTestActivity3, :default => SampleTestActivity4}) do
+      :default
     end
     a = switchActor.act({})
     assert_equal 'SAMPLE TEST ACTIVITY 4', a
-
   end
+
 end
