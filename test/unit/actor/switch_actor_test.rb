@@ -1,35 +1,27 @@
 require File.expand_path(File.dirname(__FILE__) + '/../base_drift_test')
 
 class SampleTestActivity1 < Drift::BaseActivity
-  class << self
-    def execute()
+    def execute(args = {})
       "SAMPLE TEST ACTIVITY 1"
     end
-  end
 end
 
 class SampleTestActivity2  < Drift::BaseActivity
-  class << self
-    def execute()
+    def execute(args = {})
       "SAMPLE TEST ACTIVITY 2"
     end
-  end
 end
 
 class SampleTestActivity3 < Drift::BaseActivity
-  class << self
-    def execute()
+    def execute(args = {})
       "SAMPLE TEST ACTIVITY 3"
     end
-  end
 end
 
 class SampleTestActivity4 < Drift::BaseActivity
-  class << self
-    def execute()
+    def execute(args = {})
       "SAMPLE TEST ACTIVITY 4"
     end
-  end
 end
 
 class SwitchActorTest < BaseDriftTest
@@ -42,12 +34,23 @@ class SwitchActorTest < BaseDriftTest
   end
 
   def test_switching_action
-    switchActor = Drift::SwitchActor.new(['alpha' => @activity1, 'beta' => @activity2, 'gamma' => @activity3, :default => @defaultActivity]) do
-      'alpha'
+    switchActor = Drift::SwitchActor.new({'alpha' => @activity1, 'beta' => @activity2, 'gamma' => @activity3, :default => @defaultActivity}) do
+      'beta'
     end
     a = switchActor.act({})
+    assert_equal 'SAMPLE TEST ACTIVITY 2', a
 
+    switchActor = Drift::SwitchActor.new({'alpha' => @activity1, 'beta' => @activity2, 'gamma' => @activity3, :default => @defaultActivity}) do
+      'other'
+    end
+    a = switchActor.act({})
+    assert_equal 'SAMPLE TEST ACTIVITY 4', a
 
+    switchActor = Drift::SwitchActor.new({'alpha' => @activity1, 'beta' => @activity2, 'gamma' => @activity3, :default => @defaultActivity}) do
+      'default'
+    end
+    a = switchActor.act({})
+    assert_equal 'SAMPLE TEST ACTIVITY 4', a
 
   end
 end
