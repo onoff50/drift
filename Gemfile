@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :test do
+  gem 'rake'
   gem 'test-unit', '2.4.8'
   gem 'rack-test', :require => "rack/test"
   gem 'mocha', '0.10.5'
