@@ -1,6 +1,6 @@
 module Drift
 
-  class SwitchActivity < BaseActivity
+  class SwitchActor < BaseActor
 
     #todo:write test cases
     #todo: write documentation README
