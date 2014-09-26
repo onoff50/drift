@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../base_drift_test')
 
-class SampleTestActivity1
+class SampleTestActivity1 < Drift::BaseActivity
   class << self
     def execute()
       "SAMPLE TEST ACTIVITY 1"
@@ -8,7 +8,7 @@ class SampleTestActivity1
   end
 end
 
-class SampleTestActivity2
+class SampleTestActivity2  < Drift::BaseActivity
   class << self
     def execute()
       "SAMPLE TEST ACTIVITY 2"
@@ -16,7 +16,7 @@ class SampleTestActivity2
   end
 end
 
-class SampleTestActivity3
+class SampleTestActivity3 < Drift::BaseActivity
   class << self
     def execute()
       "SAMPLE TEST ACTIVITY 3"
@@ -24,7 +24,7 @@ class SampleTestActivity3
   end
 end
 
-class SampleTestActivity4
+class SampleTestActivity4 < Drift::BaseActivity
   class << self
     def execute()
       "SAMPLE TEST ACTIVITY 4"
@@ -42,7 +42,7 @@ class SwitchActorTest < BaseDriftTest
   end
 
   def test_switching_action
-    switchActor = SwitchActor.new(['alpha' => @activity1, 'beta' => @activity2, 'gamma' => @activity3, :default => @defaultActivity]) do
+    switchActor = Drift::SwitchActor.new(['alpha' => @activity1, 'beta' => @activity2, 'gamma' => @activity3, :default => @defaultActivity]) do
       'alpha'
     end
     a = switchActor.act({})
