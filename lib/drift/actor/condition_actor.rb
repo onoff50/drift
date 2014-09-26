@@ -1,6 +1,5 @@
 module Drift
 
-
   class ConditionActor < BaseActor
 
     attr_accessor :then_activity, :else_activity, :condition
@@ -11,17 +10,13 @@ module Drift
       @condition = condition
     end
 
-
     def act(args = {})
-
       if @condition.call(args)
-        @then_activity.execute(args)
+        @then_activity.execute
       else
-        @else_activity.execute(args)
+        @else_activity.try(:execute, args)
       end
-
     end
-
 
   end
 
