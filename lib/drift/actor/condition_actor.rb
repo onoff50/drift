@@ -14,7 +14,12 @@ module Drift
       if @condition.call(args)
         @then_activity.execute
       else
-        @else_activity.try(:execute, args)
+        begin
+          @else_activity.execute(args)
+        rescue NoMethodError => e
+          logger.info 'No else part specified'
+          nil
+        end
       end
     end
 
