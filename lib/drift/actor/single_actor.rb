@@ -11,12 +11,12 @@ module Drift
     end
 
     def act(args = {})
+      logger.info "Executing #{@activity.class} activity."
       @activity.execute(args)
     end
 
 
+  end  #end of class
 
-  end
 
-
-end
+end  #end of module

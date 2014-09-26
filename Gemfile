@@ -6,12 +6,10 @@ gemspec
 group :test do
   gem 'test-unit', '2.4.8'
   gem 'rack-test', :require => "rack/test"
-  gem 'mocha'
+  gem 'mocha', '0.10.5'
   gem 'shoulda'
   gem 'shoulda-matchers'
   gem 'shoulda-context'
-  gem 'activerecord'
-  gem 'database_cleaner'
-  gem 'sqlite3'
+  gem 'activerecord', "3.1.3.patched"
   gem 'rest-client'
 end

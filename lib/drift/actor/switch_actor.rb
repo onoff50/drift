@@ -1,22 +1,31 @@
 module Drift
 
-  class SwitchActivity < BaseActivity
+
+
+  class SwitchActor < BaseActor
 
     #todo:write test cases
     #todo: write documentation README
 
 
+    # sample activities = {1 => A1, 2 => A2}
     def initialize(activities = {}, &condition)
       @activities = activities
       @condition = condition
     end
 
-    #todo: better logging
     def act(args = {})
       val = @condition.call(args)
-      activity = @activities[val].present? ? @activities[val] : @activities[:default]
+      logger.info "Switch Val = #{val}"
 
-      raise "No activity found for swith val = #{val}" unless activity.present?
+      activity = @activities[val]
+
+      if activity.blank?
+        logger.info "No activity found for val = #{val}, will use default case."
+        activity = @activities[:default]
+      end
+
+      raise "No default activity found for switch val = #{val}" unless activity.present?
 
       activity.execute(args)
     end
