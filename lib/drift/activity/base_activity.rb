@@ -1,0 +1,2 @@
+class BaseActivity
+end

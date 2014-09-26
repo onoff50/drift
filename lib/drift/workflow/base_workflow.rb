@@ -1,0 +1,2 @@
+class BaseWorkflow
+end

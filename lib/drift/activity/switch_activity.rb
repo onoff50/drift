@@ -1,0 +1,2 @@
+class SwitchActivity
+end
