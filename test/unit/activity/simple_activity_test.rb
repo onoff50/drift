@@ -1,0 +1,2 @@
+class SimpleActivityTest
+end

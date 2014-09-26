@@ -1,0 +1,2 @@
+class SwitchActivityTest
+end
