@@ -1,2 +1,7 @@
-class SwitchActivity
+
+module Drift
+
+  class SwitchActivity < BaseActivity
+  end
+
 end

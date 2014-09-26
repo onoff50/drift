@@ -1,2 +1,8 @@
-class BaseWorkflow
+
+module Drift
+
+  class BaseWorkflow
+
+  end
+
 end
