@@ -1,5 +1,3 @@
-
-
 module Drift
 
   class BaseActivity
@@ -10,6 +8,11 @@ module Drift
       @name = name
       @desc = desc
     end
+
+    def run
+      raise "Not Implemented"
+    end
+
   end
 
 end
