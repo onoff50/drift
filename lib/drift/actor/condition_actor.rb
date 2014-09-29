@@ -12,12 +12,12 @@ module Drift
 
     def act(args = {})
       if @condition.call(args)
-        @then_activity.execute
+        @then_activity.execute(args)
       else
         begin
           @else_activity.execute(args)
         rescue NoMethodError => e
-          logger.info 'No else part specified'
+          $logger.info 'No else part specified'
           nil
         end
       end

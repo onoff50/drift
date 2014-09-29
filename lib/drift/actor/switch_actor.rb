@@ -16,12 +16,12 @@ module Drift
 
     def act(args = {})
       val = @condition.call(args)
-      logger.info "Switch Val = #{val}"
+      $logger.info "Switch Val = #{val}"
 
       activity = @activities[val]
 
       if activity.blank?
-        logger.info "No activity found for val = #{val}, will use default case."
+        $logger.info "No activity found for val = #{val}, will use default case."
         activity = @activities[:default]
       end
 

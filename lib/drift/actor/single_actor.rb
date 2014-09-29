@@ -11,7 +11,7 @@ module Drift
     end
 
     def act(args = {})
-      logger.info "Executing #{@activity.class} activity."
+      $logger.info "Executing #{@activity.class} activity."
       @activity.execute(args)
     end
 
