@@ -1,7 +1,6 @@
 module Drift
 
 
-
   class SwitchActor < BaseActor
 
     #todo:write test cases
@@ -9,27 +8,30 @@ module Drift
 
 
     # sample activities = {1 => A1, 2 => A2}
-    def initialize(activities = {}, &condition)
+    def initialize(activities = {}, condition)
       @activities = activities
       @condition = condition
     end
 
-    def action(args = {})
-      val = @condition.call(args)
+    def do_action(context)
+      val = @condition.call(context)
+
       $logger.info "Switch Val = #{val}"
 
       activity = @activities[val]
 
+      #todo: add test  for below if condition
       if activity.blank?
         $logger.info "No activity found for val = #{val}, will use default case."
         activity = @activities[:default]
       end
 
-      raise "No default activity found for switch val = #{val}" unless activity.present?
+      #todo: add test for below exception
+      raise DriftException , "No default activity found for switch val = #{val}" if activity.blank?
 
-      activity.execute(args)
+      activity.execute(context) if activity.present?
     end
 
-  end
+  end #end of class SwitchActor
 
-end
+end   #end of module Drift

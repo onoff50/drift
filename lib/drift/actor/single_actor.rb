@@ -10,13 +10,12 @@ module Drift
       @activity = activity
     end
 
-    def action(args = {})
-      $logger.info "Executing #{@activity.class} activity."
-      @activity.execute(args)
+    def do_action(context)
+      @activity.execute(context)
     end
 
 
-  end  #end of class
+  end #end of class
 
 
-end  #end of module
+end #end of module

@@ -12,6 +12,8 @@ require 'json'
 require_relative 'factories'
 
 require_relative '../lib/drift'
+require_relative '../lib/sample/railway_crossing'
+
 
 require File.expand_path(File.dirname(__FILE__) + "/factories")
 

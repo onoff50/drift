@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../base_drift_test')
 
 
-class BaseOrchestratorTest < BaseDriftTest
+class BaseActTest < BaseDriftTest
   include Drift
   setup do
     BaseAct.register_actors({
