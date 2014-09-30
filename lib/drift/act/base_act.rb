@@ -1,6 +1,10 @@
 module Drift
 
-  class BaseWorkflow
+  #
+  # An act is series of actions performed by actors. To perform the act we must know our actions/activities
+  # to be performed by the selected/suitable actors.
+  #
+  class BaseAct
     class << self
 
       attr_accessor :actors, :name, :desc
@@ -19,7 +23,7 @@ module Drift
 
       def execute(args)
         Hash[@actors.sort].each do |k, v|
-          v.act(args)
+          v.action(args)
         end
       end
 

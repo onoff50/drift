@@ -1,30 +1,35 @@
 require File.expand_path(File.dirname(__FILE__) + '/../base_drift_test')
 
 class SwitchActorTest < BaseDriftTest
-  include Drift
+  include Drift   
 
   def test_switching_action_act_on_2_for_beta
-    switchActor = SwitchActor.new({'alpha' => SampleTestActivity1, 'beta' => SampleTestActivity2, 'gamma' => SampleTestActivity3, :default => SampleTestActivity4}) do
+    switch_actor = SwitchActor.new({'alpha' => AddWater, 'beta' => AddNoodles, 'gamma' => AddSpices, :default => CookForFiveMins}) do
       'beta'
     end
-    a = switchActor.act(BaseContext.new({}))
-    assert_equal 'SAMPLE TEST ACTIVITY 2', a['act2']
+    a = switch_actor.action(BaseContext.new({}))
+    assert_equal 'Added maggie noodles', a['noodles']
+    assert_nil a['water']
+    assert_nil a['spices']
   end
 
   def test_switching_action_act_on_4_for_other
-    switchActor = SwitchActor.new({'alpha' => SampleTestActivity1, 'beta' => SampleTestActivity2, 'gamma' => SampleTestActivity3, :default => SampleTestActivity4}) do
+    switch_actor = SwitchActor.new({'alpha' => AddWater, 'beta' => AddNoodles, 'gamma' => AddSpices, :default => CookForFiveMins}) do
       'other'
     end
-    a = switchActor.act(BaseContext.new({}))
-    assert_equal 'SAMPLE TEST ACTIVITY 4', a['act4']
+    a = switch_actor.action(BaseContext.new({}))
+    assert_equal 'Cook on gas for five minutes', a['cook']
+    assert_nil a['spices']
+    assert_nil a['water']
+    assert_nil a['noodles']
   end
 
   def test_switching_action_act_on_4_for_default
-    switchActor = SwitchActor.new({'alpha' => SampleTestActivity1, 'beta' => SampleTestActivity2, 'gamma' => SampleTestActivity3, :default => SampleTestActivity4}) do
+    switch_actor = SwitchActor.new({'alpha' => AddWater, 'beta' => AddNoodles, 'gamma' => AddSpices, :default => CookForFiveMins}) do
       :default
     end
-    a = switchActor.act(BaseContext.new({}))
-    assert_equal 'SAMPLE TEST ACTIVITY 4', a['act4']
+    a = switch_actor.action(BaseContext.new({}))
+    assert_equal 'Cook on gas for five minutes', a['cook']
   end
 
 end

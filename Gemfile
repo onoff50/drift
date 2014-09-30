@@ -10,6 +10,7 @@ group :test do
   gem 'mocha', '0.10.5'
   gem 'shoulda'
   gem 'shoulda-matchers'
+  #gem 'factory_girl'
   gem 'shoulda-context'
   gem 'activerecord', "3.1.3.patched"
   gem 'rest-client'

@@ -10,7 +10,7 @@ module Drift
       @condition = condition
     end
 
-    def act(args = {})
+    def action(args = {})
       if @condition.call(args)
         @then_activity.execute(args)
       else

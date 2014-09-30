@@ -6,7 +6,7 @@ module Drift
 
       def execute(args = {})
         $logger.info "Not Implemented"
-        raise "Not Implemented"
+        raise DriftException, "Not Implemented"
       end
     end
 

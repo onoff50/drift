@@ -1,37 +1,42 @@
 require File.expand_path(File.dirname(__FILE__) + '/../test_config')
 
 
-class SampleTestActivity1 < Drift::BaseActivity
+# execute not implemented, used to test for exceptions
+class MyActivity < Drift:: BaseActivity
+end
+
+class AddWater < Drift::BaseActivity
   def self.execute(context)
-    context.add('act1', 'SAMPLE TEST ACTIVITY 1')
+    context.add('water', 'Added 2 cups water to the recipe')
   end
 end
 
-class SampleTestActivity2 < Drift::BaseActivity
+class AddNoodles < Drift::BaseActivity
   def self.execute(context)
-    context.add('act2', 'SAMPLE TEST ACTIVITY 2')
+    context.add('noodles', 'Added maggie noodles')
   end
 end
 
-class SampleTestActivity3 < Drift::BaseActivity
+class AddSpices < Drift::BaseActivity
   def self.execute(context)
-    context.add('act3', 'SAMPLE TEST ACTIVITY 3')
+    context.add('spices', 'Add maggie ingredients')
   end
 end
 
-class SampleTestActivity4 < Drift::BaseActivity
+class CookForFiveMins < Drift::BaseActivity
   def self.execute(context)
-    context.add('act4', 'SAMPLE TEST ACTIVITY 4')
+    context.add('cook', 'Cook on gas for five minutes')
   end
 end
 
 class SampleTestService
   class << self
     def sampleTestMethod(return_value)
-      return return_value
+      return_value
     end
   end
 end
 
 class BaseDriftTest < ActiveSupport::TestCase
+  include Drift
 end

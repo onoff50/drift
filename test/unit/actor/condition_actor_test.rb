@@ -4,24 +4,24 @@ class ConditionActorTest < BaseDriftTest
   include Drift
 
   def test_for_then_activity
-    @condition_actor = ConditionActor.new(SampleTestActivity1, SampleTestActivity2) do
+    @condition_actor = ConditionActor.new(AddWater, AddNoodles) do
       SampleTestService.sampleTestMethod(true)
     end
-    assert_equal 'SAMPLE TEST ACTIVITY 1', @condition_actor.act(BaseContext.new({}))['act1']
+    assert_equal 'Added 2 cups water to the recipe', @condition_actor.action(BaseContext.new({}))['water']
   end
 
   def test_for_else_activity
-    @condition_actor = Drift::ConditionActor.new(SampleTestActivity1, SampleTestActivity2) do
+    @condition_actor = Drift::ConditionActor.new(AddWater, AddNoodles) do
       SampleTestService.sampleTestMethod(false)
     end
-    assert_equal 'SAMPLE TEST ACTIVITY 2', @condition_actor.act(BaseContext.new({}))['act2']
+    assert_equal 'Added maggie noodles', @condition_actor.action(BaseContext.new({}))['noodles']
   end
 
   def test_for_null_else_activity
-    @condition_actor = Drift::ConditionActor.new(SampleTestActivity1, nil) do
+    @condition_actor = Drift::ConditionActor.new(AddWater, nil) do
       SampleTestService.sampleTestMethod(false)
     end
-    assert_equal nil, @condition_actor.act({})
+    assert_equal nil, @condition_actor.action({})
   end
 
 end

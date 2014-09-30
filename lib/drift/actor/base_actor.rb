@@ -2,7 +2,7 @@
 module Drift
   class BaseActor
 
-    def act(args = {})
+    def action(args = {})
       raise 'Not Implemented.'
     end
 

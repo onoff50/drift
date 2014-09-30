@@ -14,7 +14,7 @@ module Drift
       @condition = condition
     end
 
-    def act(args = {})
+    def action(args = {})
       val = @condition.call(args)
       $logger.info "Switch Val = #{val}"
 
