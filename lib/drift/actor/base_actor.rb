@@ -1,6 +1,12 @@
 module Drift
   class BaseActor
 
+    attr_accessor :next_actor_map, :current_activity
+
+    def initialize
+       @next_actor_map = {}
+       @current_activity = nil
+    end
     # Every actor will call action() to perform activity.
     # Actors should NOT extend action().
     # Common action should be implemented in here, for example returning context after every activity.
@@ -18,5 +24,15 @@ module Drift
     def to_s
       self.class.name
     end
+
+    def register_next(activity, actor)
+      @next_actor_map[activity] = actor
+      actor
+    end
+
+    def next_actor
+      @next_actor_map[@current_activity]
+    end
+
   end
 end

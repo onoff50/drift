@@ -7,7 +7,7 @@ module Drift
   class BaseAct
     class << self
 
-      attr_accessor :actors, :name, :desc
+      attr_accessor :first_actor, :name, :desc
 
       def name
         self.name
@@ -25,47 +25,30 @@ module Drift
       end
 
       def execute(context)
-        @actors.each do |k, v|
-          v.action(context)
-        end
+        actor = first_actor
+        begin
+          actor.action(context)
+          actor = actor.next_actor
+        end while actor
       end
 
 
-      def register_single_actor(activity)
-        add_actor SingleActor.new(activity)
-
+      def single_actor(activity)
+        SingleActor.new(activity)
       end
 
-      def register_condition_actor(then_activity, else_activity, condition)
-        add_actor ConditionActor.new(then_activity, else_activity, condition)
+      def condition_actor(then_activity, else_activity, condition)
+        ConditionActor.new(then_activity, else_activity, condition)
       end
+
 
       #  todo
-      def register_switch_actor(activities, condition)
+      def switch_actor(activities, condition)
         #add_actor
       end
 
       def to_s
         @actors.to_s
-      end
-
-      def print
-        @actors.each do |entry|
-          $logger.info entry.to_s + "\n"
-        end
-      end
-
-
-      private
-      #todo: we may not need sort as order is guaranteed
-      def get_key
-        (@actors.keys.sort.last.to_i + 1)
-      end
-
-      def add_actor(actor, key = nil)
-        @actors = ActiveSupport::OrderedHash.new if @actors.nil?
-        key = get_key if key.nil?
-        @actors[key] = actor
       end
 
 

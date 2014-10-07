@@ -4,11 +4,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../base_drift_test')
 class BaseActTest < BaseDriftTest
   include Drift
   setup do
-    BaseAct.register_actors({
-                                     1 => SingleActor.new(AddWater),
-                                     2 => SingleActor.new(AddNoodles)
+    f = BaseAct.single_actor(AddWater)
 
-                                 })
+    BaseAct.first_actor = f
+
+    f.register_next(BaseAct.single_actor(AddNoodles) )
   end
 
   def test_single_run

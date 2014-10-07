@@ -10,6 +10,7 @@ module Drift
     attr_accessor :then_activity, :else_activity, :condition
 
     def initialize(then_activity, else_activity, condition)
+      super()
       @then_activity = then_activity
       @else_activity = else_activity
       @condition = condition
@@ -30,6 +31,7 @@ module Drift
       if else_activity.present?
         $logger.info "Executing ELSE activity #{@else_activity.name}"
         @else_activity.execute(context)
+        @current_activity = @else_activity
       else
         $logger.info 'Skipping else part as ELSE activity not specified'
       end
@@ -38,6 +40,7 @@ module Drift
     def execute_then_activity(context)
       $logger.info "Executing THEN activity #{@then_activity.name}"
       @then_activity.execute(context)
+      @current_activity = @then_activity
     end
 
     def to_s

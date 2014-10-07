@@ -9,6 +9,7 @@ module Drift
 
     # sample activities = {1 => A1, 2 => A2}
     def initialize(activities = {}, condition)
+      super()
       @activities = activities
       @condition = condition
     end
@@ -19,6 +20,8 @@ module Drift
       $logger.info "Switch Val = #{val}"
 
       activity = @activities[val]
+      #setting current activity
+      @current_activity = activity
 
       #todo: add test  for below if condition
       if activity.blank?

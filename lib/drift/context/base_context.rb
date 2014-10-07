@@ -8,7 +8,7 @@ module Drift
     end
 
     def add(key, value)
-      $logger.info "KEY = #{key}, VALUE = #{value.inspect}"
+      $logger.info "Writing to context KEY = #{key}, VALUE = #{value.inspect}"
 
       raise DriftException, 'Key can not be nil' if key.blank?
       raise DriftException, 'Key already present' if (@context[key].present?)
