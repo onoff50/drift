@@ -1,6 +1,5 @@
 module Drift
 
-
   class SingleActor < BaseActor
 
 
