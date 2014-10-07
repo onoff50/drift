@@ -18,7 +18,7 @@ module Drift
 
     # Actors should implement the do_action() to extent the functionality.
     def do_action(context)
-      raise DriftException, 'Not Implemented.'
+      raise DriftException, 'Not Implemented'
     end
 
     def to_s
