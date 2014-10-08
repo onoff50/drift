@@ -1,3 +1,4 @@
+include DriftHelper
 include Drift
 
 class LookLeft < BaseActivity

@@ -4,7 +4,7 @@ module Drift
     attr_accessor :context
 
     def initialize(args = {})
-      @context = args
+      @context = args.clone
     end
 
     def add(key, value)

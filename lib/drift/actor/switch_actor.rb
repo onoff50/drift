@@ -20,8 +20,7 @@ module Drift
       $logger.info "Switch Val = #{val}"
 
       activity = @activities[val]
-      #setting current activity
-      @current_activity = activity
+
 
       #todo: add test  for below if condition
       if activity.blank?
@@ -30,11 +29,20 @@ module Drift
       end
 
       #todo: add test for below exception
-      raise DriftException , "No default activity found for switch val = #{val}" if activity.blank?
+      raise DriftException, "No default activity found for switch val = #{val}" if activity.blank?
+
+      #setting current activity
+      @current_activity = activity
 
       activity.execute(context) if activity.present?
     end
 
+    def register_next_for_all(actor)
+      @activities.values.each do |activity|
+          register_next(activity, actor)
+      end
+    end
+
   end #end of class SwitchActor
 
-end   #end of module Drift
+end #end of module Drift

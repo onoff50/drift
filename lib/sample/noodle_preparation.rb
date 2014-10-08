@@ -1,6 +1,6 @@
 include Drift
-
 class AddWater < Drift::BaseActivity
+
   def self.do_execute(context)
     context.add('water', 'Added 2 cups water to the recipe')
   end
