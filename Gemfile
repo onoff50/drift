@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in drift.gemspec
 gemspec
 
+gem 'sidekiq'
+
 group :test do
   gem 'rake'
   gem 'test-unit', '2.4.8'
@@ -12,6 +14,6 @@ group :test do
   gem 'shoulda-matchers'
   #gem 'factory_girl'
   gem 'shoulda-context'
-  gem 'activerecord', "3.1.3.patched"
+  gem 'activerecord', '3.1.3.patched'
   gem 'rest-client'
 end

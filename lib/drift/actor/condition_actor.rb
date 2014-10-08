@@ -30,7 +30,7 @@ module Drift
     def execute_else_activity(context)
       if else_activity.present?
         $logger.info "Executing ELSE activity #{@else_activity.name}"
-        @else_activity.execute(context)
+        @else_activity.perform(context)
         @current_activity = @else_activity
       else
         $logger.info 'Skipping else part as ELSE activity not specified'
@@ -39,7 +39,7 @@ module Drift
 
     def execute_then_activity(context)
       $logger.info "Executing THEN activity #{@then_activity.name}"
-      @then_activity.execute(context)
+      @then_activity.perform(context)
       @current_activity = @then_activity
     end
 

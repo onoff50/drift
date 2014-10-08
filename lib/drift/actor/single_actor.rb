@@ -10,8 +10,12 @@ module Drift
       @activity = activity
     end
 
+    def do_action_async(context)
+      @activity.perform_async(context)
+    end
+
     def do_action(context)
-      @activity.execute(context)
+      @activity.perform(context)
     end
 
     def register_next(actor)

@@ -22,13 +22,13 @@ class SampleActivityTest < BaseDriftTest
 
   def test_do_execute_for_activity_without_execute
     assert_raise(DriftException, "Not Implemented") do
-      @sample_activity_without_execute.execute(@sample_context)
+      @sample_activity_without_execute.perform(@sample_context)
     end
   end
 
   def test_do_execute_for_activity_with_execute
     assert_nothing_raised do
-      @sample_activity_with_execute.execute(@sample_context)
+      @sample_activity_with_execute.perform(@sample_context)
     end
   end
 

@@ -28,7 +28,6 @@ module Drift
           actor.action(context)
           actor = actor.next_actor
         end while actor
-        context
       end
 
       def to_s

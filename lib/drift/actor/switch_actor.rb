@@ -8,7 +8,7 @@ module Drift
 
 
     # sample activities = {1 => A1, 2 => A2}
-    def initialize(activities = {}, condition)
+    def initialize(activities = {}, condition = nil)
       super()
       @activities = activities
       @condition = condition
@@ -34,7 +34,7 @@ module Drift
       #setting current activity
       @current_activity = activity
 
-      activity.execute(context) if activity.present?
+      activity.perform(context) if activity.present?
     end
 
     def register_next_for_all(actor)
