@@ -37,6 +37,10 @@ module Drift
         SingleActor.new(activity)
       end
 
+      def side_actor(activity)
+        SideActor.new(activity)
+      end
+
       def condition_actor(then_activity, else_activity, condition)
         ConditionActor.new(then_activity, else_activity, condition)
       end
