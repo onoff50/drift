@@ -47,6 +47,11 @@ module Drift
       super + "(then_activity = #{@then_activity}, else_activity = #{@else_activity})"
     end
 
+    def register_next_for_all(actor)
+      register_next(@then_activity, actor)
+      register_next(@else_activity, actor)
+    end
+
   end
 
 end

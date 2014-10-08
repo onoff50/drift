@@ -10,14 +10,11 @@ class SegregateTest < BaseDriftTest
   end
 
   def test_one
-    a = {}
     cxt = BaseContext.new(a)
-    a['abc'] = 'def'
     Segregate.execute(cxt)
     assert_true(cxt['audited'])
     assert_true(cxt['category_id'].present?)
     assert_true(cxt['wsn'].present?)
-    puts cxt
   end
 
 end
