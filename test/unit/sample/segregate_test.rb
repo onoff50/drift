@@ -4,8 +4,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../base_drift_test')
 class SegregateTest < BaseDriftTest
 
   def test_all_actors_called
-    FetchData.expects(:execute)
-    WriteAuditLogs.expects(:execute)
+    FetchData.expects(:perform)
+    WriteAuditLogs.expects(:perform)
     Segregate.execute(BaseContext.new({}))
   end
 
