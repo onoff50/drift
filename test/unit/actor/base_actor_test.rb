@@ -8,9 +8,9 @@ class BaseActorTest < BaseDriftTest
   end
 
   def test_action
-    assert_raise(DriftException, 'Not Implemented') do
-      @base_actor.action(@sample_context)
-    end
+    BaseActor.any_instance.expects(:do_action).with(@sample_context)
+    r = @base_actor.action(@sample_context)
+    assert_equal r, @sample_context
   end
 
   def test_do_action
@@ -21,13 +21,17 @@ class BaseActorTest < BaseDriftTest
 
   def test_next_actor
     next_actor_obj = @base_actor.next_actor
-    assert_equal(nil, next_actor_obj)
+    assert_equal nil, next_actor_obj
   end
 
   def test_register_next
-    next_actor_obj = @base_actor.register_next("Some Activity", "Some Actor")
-    assert_equal("Some Actor", next_actor_obj)
-    assert_equal(@base_actor.next_actor_map, {"Some Activity" => "Some Actor"})
+    next_actor_obj = @base_actor.register_next('Some Activity', 'Some Actor')
+
+    assert_equal nil, @base_actor.next_actor
+    assert_equal "Some Actor", next_actor_obj
+
+    @base_actor.current_activity = 'Some Activity'
+    assert_equal @base_actor.next_actor, 'Some Actor'
   end
 
 end

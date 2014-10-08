@@ -8,4 +8,8 @@ class SingleActorTest < BaseDriftTest
     assert_equal 'Added 2 cups water to the recipe', @condition_actor.action(BaseContext.new({}))['water']
   end
 
+  def test_next_actor
+
+  end
+
 end

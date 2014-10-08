@@ -24,7 +24,7 @@ module Drift
         end
       end
 
-      def execute(context)
+        def execute(context)
         actor = first_actor
         begin
           actor.action(context)
