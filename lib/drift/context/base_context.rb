@@ -24,9 +24,6 @@ module Drift
       @context.to_s
     end
 
-    def to_json
-      @context.to_json
-    end
 
     def [] key
       @context[key]

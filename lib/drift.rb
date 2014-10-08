@@ -15,11 +15,24 @@ require_relative 'drift/act/base_act'
 
 require_relative 'drift/exception/drift_exception'
 
+require_relative 'drift/config/database'
 
 
 $logger = (defined? logger) ? logger : Logger.new(STDOUT)
+
+Sidekiq.configure_server do |config|
+  $logger.info 'INITIALIZING REDIS'
+  config.redis = { namespace:  'drift', size: 25,url: "redis://#{DB_DEFAULTS[:host]}:#{DB_DEFAULTS[:port]}/12" }
+end
+
+Sidekiq.configure_client do |config|
+  $logger.info 'INITIALIZING REDIS'
+  config.redis = { namespace:  'drift', size: 1, url: "redis://#{DB_DEFAULTS[:host]}:#{DB_DEFAULTS[:port]}/12" }
+end
+
 
 module Drift
   # Your code goes here...
 
 end
+

@@ -1,8 +1,9 @@
 module Drift
 
   class BaseActivity
+    include Sidekiq::Worker
+
     class << self
-      include Sidekiq::Worker
 
       def perform(context)
         execute context
