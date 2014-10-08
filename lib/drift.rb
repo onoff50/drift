@@ -11,6 +11,8 @@ require_relative 'drift/context/base_context'
 
 require_relative 'drift/act/base_act'
 
+require_relative 'drift/helper/drift_helper'
+
 require_relative 'drift/exception/drift_exception'
 
 
