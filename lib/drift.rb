@@ -13,7 +13,7 @@ require_relative 'drift/act/base_act'
 
 require_relative 'drift/exception/drift_exception'
 
-
+require 'sidekiq'
 
 $logger = (defined? logger) ? logger : Logger.new(STDOUT)
 

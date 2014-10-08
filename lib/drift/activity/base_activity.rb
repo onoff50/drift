@@ -4,7 +4,7 @@ module Drift
 
     class << self
 
-      def execute(context)
+      def perform(context)
         pre_activity context
         do_execute context
         post_activity context

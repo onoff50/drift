@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in drift.gemspec
 gemspec
 
+gem 'sidekiq'
+
 group :test do
   gem 'rake'
   gem 'test-unit', '2.4.8'

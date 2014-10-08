@@ -7,11 +7,11 @@ class BaseActivityTest < BaseDriftTest
     @sample_context = {:a => 'b'}
   end
 
-  def test_execute
+  def test_perform
     BaseActivity.expects(:pre_activity).with(@sample_context)
     BaseActivity.expects(:do_execute).with(@sample_context)
     BaseActivity.expects(:post_activity).with(@sample_context)
-    @base_activity.execute(@sample_context)
+    @base_activity.perform(@sample_context)
   end
 
   def test_do_execute

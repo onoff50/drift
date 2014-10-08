@@ -8,6 +8,7 @@ require 'logger'
 #require 'factory_girl'
 require 'active_record'
 require 'json'
+require 'sidekiq'
 
 require_relative 'factories'
 
