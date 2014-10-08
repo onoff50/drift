@@ -8,13 +8,17 @@ class BaseActTest < BaseDriftTest
 
     BaseAct.first_actor = f
 
-    f.register_next(BaseAct.single_actor(AddNoodles) )
+    f.register_next(BaseAct.single_actor(AddNoodles))
   end
 
   def test_single_run
     args = {}
-    BaseAct.execute(BaseContext.new(args))
-    assert_equal 'Added 2 cups water to the recipe', args['water']
-    assert_equal 'Added maggie noodles', args['noodles']
+    ctx =BaseContext.new(args)
+    BaseAct.execute(ctx)
+    assert_equal 'Added 2 cups water to the recipe', ctx['water']
+    assert_equal 'Added maggie noodles', ctx['noodles']
+
+    assert_nil args['water']
+    assert_nil args['noodles']
   end
 end

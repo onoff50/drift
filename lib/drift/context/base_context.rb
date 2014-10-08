@@ -4,7 +4,7 @@ module Drift
     attr_accessor :context
 
     def initialize(args = {})
-      @context = args
+      @context = args.clone
     end
 
     def add(key, value)
@@ -24,9 +24,6 @@ module Drift
       @context.to_s
     end
 
-    def to_json
-      @context.to_json
-    end
 
     def [] key
       @context[key]
