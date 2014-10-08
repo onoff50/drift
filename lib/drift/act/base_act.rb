@@ -29,11 +29,7 @@ module Drift
           actor = actor.next_actor
         end while actor
         context
-
       end
-
-
-
 
       def to_s
         "Start #{first_actor.to_s}, name #{@name}, desc #{desc}"
