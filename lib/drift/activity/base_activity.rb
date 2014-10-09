@@ -1,11 +1,6 @@
 module Drift
 
   class BaseActivity
-    include Sidekiq::Worker
-
-    def perform(context)
-      self.class.perform(context)
-    end
 
     class << self
 
@@ -31,9 +26,6 @@ module Drift
         raise DriftException, "Not Implemented"
       end
 
-      #def to_s
-      #  self.name
-      #end
     end
 
   end

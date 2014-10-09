@@ -14,5 +14,6 @@ group :test do
   #gem 'factory_girl'
   gem 'shoulda-context'
   gem 'activerecord', '3.1.3.patched'
+  gem 'sidekiq'
   gem 'rest-client'
 end

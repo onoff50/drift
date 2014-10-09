@@ -14,24 +14,12 @@ module Drift
 
       attr_accessor :first_actor, :desc
 
-      #def name
-      #  self.name
-      #end
-
       def desc
-        'Description not available'
+        "First actor #{@first_actor.name},  Description not Available"
       end
 
       def execute(context)
-        actor = first_actor
-        begin
-          actor.action(context)
-          actor = actor.next_actor
-        end while actor
-      end
-
-      def to_s
-        "Start #{first_actor.to_s}, name #{@name}, desc #{desc}"
+        @first_actor.perform context
       end
 
 
