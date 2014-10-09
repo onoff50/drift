@@ -31,9 +31,9 @@ module Drift
         raise DriftException, "Not Implemented"
       end
 
-      def to_s
-        self.name
-      end
+      #def to_s
+      #  self.name
+      #end
     end
 
   end

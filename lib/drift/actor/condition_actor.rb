@@ -43,9 +43,9 @@ module Drift
       @current_activity = @then_activity
     end
 
-    def to_s
-      super + "(then_activity = #{@then_activity}, else_activity = #{@else_activity})"
-    end
+    #def to_s
+    #  super + "(then_activity = #{@then_activity}, else_activity = #{@else_activity})"
+    #end
 
     def register_next_for_all(actor)
       register_next(@then_activity, actor)

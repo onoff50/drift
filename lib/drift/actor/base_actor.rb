@@ -21,9 +21,9 @@ module Drift
       raise DriftException, 'Not Implemented'
     end
 
-    def to_s
-      self.class.name
-    end
+    #def to_s
+    #  self.class.name
+    #end
 
     def register_next(activity, actor)
       @next_actor_map[activity] = actor

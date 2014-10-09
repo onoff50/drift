@@ -8,9 +8,10 @@ Gem::Specification.new do |gem|
   gem.summary       = "Return flow configuration"
 
   gem.files         = `git ls-files`.split($\)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  #gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "drift"
   gem.require_paths = ["lib"]
   gem.version       = Drift::VERSION
+  gem.add_dependency('sidekiq', '>= 2.17.7')
 end

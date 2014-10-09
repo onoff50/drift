@@ -20,9 +20,9 @@ module Drift
       @context.merge!(key => value) if (key.present?)
     end
 
-    def to_s
-      @context.to_s
-    end
+    #def to_s
+    #  @context.to_s
+    #end
 
 
     def [] key
