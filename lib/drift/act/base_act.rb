@@ -12,11 +12,11 @@ module Drift
 
       include DriftHelper
 
-      attr_accessor :first_actor, :name, :desc
+      attr_accessor :first_actor, :desc
 
-      def name
-        self.name
-      end
+      #def name
+      #  self.name
+      #end
 
       def desc
         'Description not available'
