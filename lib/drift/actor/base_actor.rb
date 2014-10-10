@@ -12,9 +12,9 @@ module Drift
     end
 
     # this shouldn't be overridden by child classes
-    def perform(context, next_actor_map = @next_actor_map, current_activity = @current_activity)
+    def perform(context, nxt_actor_map = next_actor_map)
       action context
-      post_action context, next_actor_map, current_activity
+      post_action context, nxt_actor_map[@current_activity]
       context
     end
 
@@ -27,10 +27,10 @@ module Drift
       context
     end
 
-    def post_action(context, next_actor_map, current_activity)
+    def post_action(context, nxt_actor)
       #next_actor.action context
       m = @async ? 'perform_async' : 'perform'
-      nxt_actor = next_actor_map[current_activity]
+
       nxt_actor.send(m, context) if nxt_actor
     end
 

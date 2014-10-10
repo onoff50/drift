@@ -13,9 +13,5 @@ module DriftHelper
     SwitchActor.new(activities, condition)
   end
 
-  def side_actor(activity)
-    SideActor.new(activity)
-  end
-
 
 end

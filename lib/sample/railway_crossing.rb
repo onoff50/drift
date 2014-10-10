@@ -31,7 +31,7 @@ end
 
 class RailwayCrossing < BaseAct
 
-  @first_actor = side_actor(LookLeft)
+  @first_actor = single_actor(LookLeft)
 
   condition1 = Proc.new do |ctx|
     ctx['train_on_left']
