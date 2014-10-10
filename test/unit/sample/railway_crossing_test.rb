@@ -17,4 +17,23 @@ class RailwayCrossingTest < BaseDriftTest
        RailwayCrossing.execute(BaseContext.new({'start' => 'true'}))
      end
   end
+
+
+  def test_load_dump
+
+
+
+    ctx = BaseContext.new({'start' => 'true'} )
+
+   nxt_actor_map =  RailwayCrossing.first_actor.next_actor_map
+
+    orig_obj = {"args" => [ctx, nxt_actor_map]}
+    puts "KKKK #{orig_obj.inspect}"
+    json_dump = Sidekiq.dump_json(orig_obj)
+
+    obj = Sidekiq.load_json(json_dump)
+
+    puts "PPPP #{obj.inspect}"
+  end
+
 end

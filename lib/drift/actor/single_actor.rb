@@ -16,7 +16,7 @@ module Drift
     end
 
     def self.json_create(json_data_hash)
-      new(Kernel.const_get(json_data_hash['current_activity']), json_data_hash['next_actor_map'], json_data_hash['async'])
+      new(Kernel.const_get(json_data_hash['current_activity']), load_next_actor(json_data_hash), json_data_hash['async'])
     end
 
   end

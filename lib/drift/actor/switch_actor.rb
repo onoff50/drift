@@ -34,7 +34,7 @@ module Drift
       end
     end
 
-    def to_json
+    def to_json(*args)
       {
           'json_class'   => self.class.name,
           'data' => {
@@ -43,11 +43,12 @@ module Drift
               'activities' => @activities.to_json,
               'condition' => @condition#.to_source
           }
-      }.to_json
+      }.to_json(*args)
     end
 
     def self.json_create(json_data_hash)
-      new(parse_activity_hash(json_data_hash['activities']), eval(json_data_hash['condition']), json_data_hash['next_actor_map'], json_data_hash['async'])
+      new(parse_activity_hash(json_data_hash['activities']), eval(json_data_hash['condition']),
+          load_next_actor(json_data_hash), json_data_hash['async'])
     end
 
     def self.parse_activity_hash(activity_json)

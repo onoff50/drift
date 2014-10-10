@@ -10,7 +10,7 @@ module Drift
       @async = async
     end
 
-    def perform(context, nxt_actor_map = @next_actor_map)
+    def perform(context, nxt_actor_map = next_actor_map)
       action context
 
       puts "inside perform with map #{nxt_actor_map.inspect}"
@@ -27,19 +27,19 @@ module Drift
       context
     end
 
-    def post_action(context, nxt_actor_json)
+    def post_action(context, nxt_actor)
 
-      puts "inside post_action with json #{nxt_actor_json}"
+      puts "inside post_action with json #{nxt_actor}"
 
-      return unless nxt_actor_json
+      return unless nxt_actor
 
       puts "inside post_action next"
 
-      nxt_actor_hash = JSON.parse(nxt_actor_json)
-      nxt_actor = Kernel.const_get(nxt_actor_hash['json_class']).json_create(nxt_actor_hash['data'])
+      #nxt_actor_hash = JSON.parse(nxt_actor_json)
+      #nxt_actor = Kernel.const_get(nxt_actor_hash['json_class']).json_create(nxt_actor_hash['data'])
 
       if @async
-        nxt_actor.class.perform_async(context, nxt_actor.next_actor, @current_activity)
+        nxt_actor.class.perform_async(context, nxt_actor.next_actor_map)
       else
         nxt_actor.perform(context)
       end
@@ -50,7 +50,7 @@ module Drift
     end
 
     def register_next(activity, actor, async = false)
-      @next_actor_map[activity] = actor.to_json
+      @next_actor_map[activity] = actor
       @async = async
       actor
     end
@@ -59,18 +59,26 @@ module Drift
       @next_actor_map[@current_activity]
     end
 
-    def to_json
+    def to_json(*args)
       {
           'json_class'   => self.class.name,
           'data' => {
               'next_actor_map' => @next_actor_map,
               'async' => @async
           }
-      }.to_json
+      }.to_json(*args)
     end
 
     def self.json_create(json_data_hash)
-       new(json_data_hash['next_actor_map'], json_data_hash['async'])
+      new(load_next_actor(json_data_hash), json_data_hash['async'])
+    end
+
+    def self.load_next_actor(json_data_hash)
+      tmp_next_actor_map = {}
+      json_data_hash['next_actor_map'].each do |activity, value|
+        tmp_next_actor_map[activity] = Kernel.const_get(value['json_class']).json_create(value['data'])
+      end
+      tmp_next_actor_map
     end
 
   end
