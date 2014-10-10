@@ -49,10 +49,10 @@ class RailwayCrossing < BaseAct
   c2 = condition_actor(LookRight, nil, condition2)
   c3 = condition_actor(WaitForTrain, CrossNow, condition3)
 
-  @first_actor.register_next(c1)
+  c2.register_next(LookRight, c3)
   c1.register_next(WaitForTrain,c2 )
   c1.register_next(LookRight, c3)
-  c2.register_next(LookRight, c3)
+  @first_actor.register_next(c1)
 
 end
 

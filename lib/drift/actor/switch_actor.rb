@@ -1,15 +1,11 @@
 module Drift
 
-
   class SwitchActor < BaseActor
 
-    #todo:write test cases
-    #todo: write documentation README
+    attr_accessor :activities, :condition
 
-
-    # sample activities = {1 => A1, 2 => A2}
-    def initialize(activities = {}, condition = nil)
-      super()
+    def initialize(activities = {}, condition = nil, next_actor_map = {}, async = false)
+      super(next_actor_map, async)
       @activities = activities
       @condition = condition
     end
@@ -21,19 +17,14 @@ module Drift
 
       activity = @activities[val]
 
-
-      #todo: add test  for below if condition
       if activity.blank?
         $logger.info "No activity found for val = #{val}, will use default case."
         activity = @activities[:default]
       end
 
-      #todo: add test for below exception
       raise DriftException, "No default activity found for switch val = #{val}" if activity.blank?
 
-      #setting current activity
       @current_activity = activity
-
       activity.perform(context) if activity.present?
     end
 
@@ -43,6 +34,27 @@ module Drift
       end
     end
 
-  end #end of class SwitchActor
+    def to_json
+      {
+          'json_class'   => self.class.name,
+          'data' => {
+              'next_actor_map' => @next_actor_map,
+              'async' => @async,
+              'activities' => @activities.to_json,
+              'condition' => @condition#.to_source
+          }
+      }.to_json
+    end
 
-end #end of module Drift
+    def self.json_create(json_data_hash)
+      new(parse_activity_hash(json_data_hash['activities']), eval(json_data_hash['condition']), json_data_hash['next_actor_map'], json_data_hash['async'])
+    end
+
+    def self.parse_activity_hash(activity_json)
+      activity_hash = JSON.parse(activity_json)
+      activity_hash.each{ |key,class_name| activity_hash[key]=Kernel.const_get(class_name)}
+    end
+
+  end
+
+end

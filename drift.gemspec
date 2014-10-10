@@ -14,4 +14,5 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Drift::VERSION
   gem.add_dependency('sidekiq', '>= 2.17.7')
+  gem.add_dependency('sourcify', '>= 0.5.0')
 end

@@ -1,16 +1,11 @@
 module Drift
 
-  #
-  # Condition actor works for both IF THEN ELSE
-  # and for IF THEN, which means specifying ELSE activity is optional.
-  #  todo: add condition name
-  #
   class ConditionActor < BaseActor
 
     attr_accessor :then_activity, :else_activity, :condition
 
-    def initialize(then_activity, else_activity, condition)
-      super()
+    def initialize(then_activity, else_activity, condition, next_actor_map = {}, async = false)
+      super(next_actor_map, async)
       @then_activity = then_activity
       @else_activity = else_activity
       @condition = condition
@@ -43,13 +38,26 @@ module Drift
       @current_activity = @then_activity
     end
 
-    #def to_s
-    #  super + "(then_activity = #{@then_activity}, else_activity = #{@else_activity})"
-    #end
-
     def register_next_for_all(actor)
       register_next(@then_activity, actor)
       register_next(@else_activity, actor)
+    end
+
+    def to_json
+      {
+          'json_class'   => self.class.name,
+          'data' => {
+              'next_actor_map' => @next_actor_map,
+              'async' => @async,
+              'then_activity' => @then_activity,
+              'else_activity' => @else_activity,
+              'condition' => @condition.to_source
+          }
+      }.to_json
+    end
+
+    def self.json_create(json_data_hash)
+      new(Kernel.const_get(json_data_hash['then_activity']), Kernel.const_get(json_data_hash['else_activity']), eval(json_data_hash['condition']), json_data_hash['next_actor_map'], json_data_hash['async'])
     end
 
   end

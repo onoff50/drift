@@ -20,7 +20,6 @@ module Drift
         $logger.info "OUTPUT #{context}"
       end
 
-      # @param [BaseContext] context
       def do_execute(context)
         $logger.info "Not Implemented"
         raise DriftException, "Not Implemented"

@@ -2,12 +2,10 @@ module Drift
 
   class SingleActor < BaseActor
 
-
-    def initialize(activity)
-      super()
+    def initialize(activity, next_actor_map = {}, async = false)
+      super(next_actor_map, async)
       @current_activity = activity
     end
-
 
     def do_action(context)
       @current_activity.perform(context)
@@ -17,8 +15,10 @@ module Drift
       super(@current_activity, actor, async)
     end
 
+    def self.json_create(json_data_hash)
+      new(Kernel.const_get(json_data_hash['current_activity']), json_data_hash['next_actor_map'], json_data_hash['async'])
+    end
 
-  end #end of class
+  end
 
-
-end #end of module
+end

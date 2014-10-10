@@ -1,4 +1,7 @@
 require 'sidekiq'
+require 'json'
+require 'sourcify'
+
 require_relative 'drift/version'
 
 require_relative 'drift/activity/base_activity'
