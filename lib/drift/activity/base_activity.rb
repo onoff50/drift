@@ -4,6 +4,8 @@ module Drift
 
     class << self
 
+      undef_method :new
+
       def perform(context)
         pre_activity context
         do_execute context

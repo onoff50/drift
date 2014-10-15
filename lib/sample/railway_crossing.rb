@@ -31,8 +31,6 @@ end
 
 class RailwayCrossing < BaseAct
 
-  @first_actor = single_actor(LookLeft)
-
   condition1 = Proc.new do |ctx|
     ctx['train_on_left']
   end
@@ -45,14 +43,18 @@ class RailwayCrossing < BaseAct
     ctx['train_on_right']
   end
 
-  c1 = condition_actor(WaitForTrain, LookRight, condition1)
-  c2 = condition_actor(LookRight, nil, condition2)
-  c3 = condition_actor(WaitForTrain, CrossNow, condition3)
+  a1 = single_actor(LookLeft, self.name, 'look_left')
+  a2 = condition_actor(WaitForTrain, LookRight, condition1, self.name, 10)
+  a3 = condition_actor(LookRight, nil, condition2, self.name, 2)
+  a4 = condition_actor(WaitForTrain, CrossNow, condition3, self.name, 3)
 
-  c2.register_next(LookRight, c3)
-  c1.register_next(WaitForTrain,c2 )
-  c1.register_next(LookRight, c3)
-  @first_actor.register_next(c1)
+  @start = a1
+
+  a1.register_next_actor(a2)
+  a2.register_next_actor(a3, 'WaitForTrain')
+  a2.register_next_actor(a4, 'LookRight')
+
+
 
 end
 

@@ -2,75 +2,65 @@ module Drift
   class BaseActor
     include Sidekiq::Worker
 
-    attr_accessor :next_actor_map, :current_activity, :async
+    attr_accessor :id, :act, :metadata
 
-    def initialize(next_actor_map = {}, async = false)
-      @next_actor_map = next_actor_map
-      @current_activity = nil
-      @async = async
+    #args:
+    # act class name
+    # async as boolean
+    def initialize(act, id, async)
+      @act = act
+      @id = id
+      create_metadata(async)
     end
 
-    def perform(context, nxt_actor_map = @next_actor_map)
-      action context
-
-      puts "inside perform with map #{nxt_actor_map.inspect}"
-      puts "inside perform with current_activity #{@current_activity.inspect}"
-      puts "current class #{self.class.name}"
-
-      post_action context, nxt_actor_map[@current_activity]
-      context
-    end
-
-    def action(context)
-      $logger.info "#{self.class.name} takes action."
-      do_action context
-      context
-    end
-
-    def post_action(context, nxt_actor_json)
-
-      puts "inside post_action with json #{nxt_actor_json}"
-
-      return unless nxt_actor_json
-
-      puts "inside post_action next"
-
-      nxt_actor_hash = JSON.parse(nxt_actor_json)
-      nxt_actor = Kernel.const_get(nxt_actor_hash['json_class']).json_create(nxt_actor_hash['data'])
-
-      if @async
-        nxt_actor.class.perform_async(context, nxt_actor.next_actor, @current_activity)
+    def execute context
+      if async?
+        perform_async context, @act, @id, @metadata
       else
-        nxt_actor.perform(context)
+        perform context
       end
     end
 
+    def perform(context, act = nil, id = nil, metadata = nil)
+      @act = act unless act.nil?
+      @id = id unless id.nil?
+      @metadata = metadata unless metadata.nil?
+
+      pre_action context
+      activity = do_action context
+      post_action context, activity
+      context
+    end
+
+    #args:
+    # actor object
+    # activity class name
+    def register_next_actor(actor, activity = 'default')
+      @metadata.register_next_actor actor, activity
+    end
+
+    protected
     def do_action(context)
       raise DriftException, 'Not Implemented'
     end
 
-    def register_next(activity, actor, async = false)
-      @next_actor_map[activity] = actor.to_json
-      @async = async
-      actor
+    private
+    def pre_action(context)
+      #implement if required
     end
 
-    def next_actor
-      @next_actor_map[@current_activity]
+    def post_action(context, activity)
+      next_actor = @metadata.next_actor activity
+      @act.execute_next next_actor, context
     end
 
-    def to_json
-      {
-          'json_class'   => self.class.name,
-          'data' => {
-              'next_actor_map' => @next_actor_map,
-              'async' => @async
-          }
-      }.to_json
+    def create_metadata(async)
+      @metadata = ActorMetadata.new
+      @metadata.async = async
     end
 
-    def self.json_create(json_data_hash)
-       new(json_data_hash['next_actor_map'], json_data_hash['async'])
+    def async?
+      @metadata.async
     end
 
   end

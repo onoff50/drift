@@ -26,13 +26,16 @@ end
 
 class NoodlePreparation < BaseAct
 
-  first_actor = single_actor(AddWater)
-  a2 = single_actor(AddNoodles)
-  a3 = single_actor(AddSpices)
-  a4 = single_actor(CookForFiveMins)
+  a1 = single_actor(AddWater, self.name, 0)
+  a2 = single_actor(AddNoodles, self.name, 1)
+  a3 = single_actor(AddSpices, self.name, 2)
+  a4 = single_actor(CookForFiveMins, self.name, 3)
 
-  first_actor.register_next(a2)
-  a2.register_next(a3 )
-  a3.register_next(a4 )
+  @actors = {
+      :start => a1,
+      0 => {:next_actor_map => {:default => a2}},
+      1 => {:next_actor_map => {:default => a3}},
+      2 => {:next_actor_map => {:default => a4}}
+  }
 
 end

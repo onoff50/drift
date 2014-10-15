@@ -2,29 +2,35 @@ require_relative "../helper/drift_helper"
 
 module Drift
 
-  #
-  # An act is series of actions performed by actors. To perform the act we must know our actions/activities
-  # to be performed by the selected/suitable actors.
-  #
   class BaseAct
 
     class << self
 
       include DriftHelper
 
-      attr_accessor :first_actor, :desc
-
-      def desc
-        "First actor #{@first_actor.name},  Description not Available"
-      end
+      attr_accessor :start, :act_metadata
+      @start = nil
+      @act_metadata = ActMetadata.new
 
       def execute(context)
-        @first_actor.perform context
+        @start.perform context
       end
 
+      #args
+      # next actor_id
+      # context
+      def execute_next(actor_id, context)
+        @act_metadata.actor(actor_id).perform context
+      end
+
+      #args
+      # actor instance
+      def register_actor(actor)
+        @act_metadata.register_actor actor
+      end
 
     end
+
   end
 
 end
-

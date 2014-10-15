@@ -1,3 +1,4 @@
+include DriftHelper
 include Drift
 
 class Liquidate < BaseActivity
@@ -28,7 +29,6 @@ class SupplierReturn < BaseActivity
   end
 end
 
-
 class WriteAuditLogs < BaseActivity
   def self.do_execute(context)
     puts "update inventory logs of the movement"
@@ -37,17 +37,19 @@ class WriteAuditLogs < BaseActivity
 end
 
 
-
-
 class Segregate < BaseAct
   c1 = Proc.new do
     ["supplier_return","liquidate","refurbish"][Random.rand(512)%3]
   end
-  @first_actor = single_actor(FetchData)
-  a2 = switch_actor({"supplier_return" => SupplierReturn,"liquidate" => Liquidate, "refurbish" => Refurbish}, c1)
-  a3 = single_actor(WriteAuditLogs)
 
-  first_actor.register_next(a2)
-  a2.register_next_for_all( a3 )
+  a1 = single_actor(FetchData, self.name, 0)
+  a2 = switch_actor({"supplier_return" => SupplierReturn, "liquidate" => Liquidate, "refurbish" => Refurbish}, c1, self.name, 1)
+  a3 = single_actor(WriteAuditLogs, self.name, 2)
+
+  @actors = {
+      :start => a1,
+      0 => {:next_actor_map => {:default => a2}},
+      1 => {:next_actor_map => {:default => a3}}
+  }
 end
 
