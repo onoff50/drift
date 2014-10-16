@@ -3,28 +3,28 @@ include Drift
 
 class LookLeft < BaseActivity
   def self.do_execute(context)
-    Random.rand(10) / 2 == 1 ? context.add('train_on_left', true) : context.add('train_on_left', false)
+    Random.rand(10) / 2 == 1 ? context['train_on_left']= true : context['train_on_left']= false
   end
 end
 
 class LookRight < BaseActivity
   def self.do_execute(context)
-    Random.rand(10) / 2 == 1 ? context.add('train_on_right', true) : context.add('train_on_right', false)
+    Random.rand(10) / 2 == 1 ? context['train_on_right']= true : context['train_on_right']= false
   end
 end
 
 class CrossNow < BaseActivity
   def self.do_execute(context)
-    context.add('crossed', true)
-    context.add!('message', 'Hurrey !!')
+    context['crossed']= true
+    context['message']= 'Hurrey !!'
   end
 end
 
 class WaitForTrain < BaseActivity
   def self.do_execute(context)
     $logger.info 'Waiting for 5 minutes...'
-    context.add!('wait', true)
-    context.add!('message', 'Retry after 5 minutes !!')
+    context['wait']= true
+    context['message']= 'Retry after 5 minutes !!'
   end
 end
 

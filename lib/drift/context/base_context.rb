@@ -7,26 +7,14 @@ module Drift
       @context = args.clone
     end
 
-    def add(key, value)
-      $logger.info "Writing to context KEY = #{key}, VALUE = #{value.inspect}"
-
-      raise DriftException, 'Key can not be nil' if key.blank?
-      raise DriftException, 'Key already present' if (@context[key].present?)
-
-      add!(key, value)
-    end
-
-    def add!(key, value)
-      @context.merge!(key => value) if (key.present?)
-    end
-
-    #def to_s
-    #  @context.to_s
-    #end
-
-
-    def [] key
+    def [](key)
       @context[key]
+    end
+
+    def []=(key, value)
+      $logger.info "Writing to context KEY = #{key}, VALUE = #{value.inspect}"
+      raise DriftException, 'Key can not be nil' if key.nil?
+      @context.merge!(key => value) if (key.present?)
     end
 
     def size
@@ -34,7 +22,7 @@ module Drift
     end
 
     def to_json(*args)
-       @context.to_json
+       @context.to_json(*args)
     end
 
     def self.json_create args

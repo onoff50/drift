@@ -17,8 +17,8 @@ end
 
 class FetchData < BaseActivity
   def self.do_execute(context)
-    context.add("wsn","WSN#{Random.rand(512)}")
-    context.add("category_id","#{Random.rand(512) + 1000}")
+    context["wsn"] = "WSN#{Random.rand(512)}"
+    context["category_id"] = "#{Random.rand(512) + 1000}"
   end
 end
 
@@ -32,7 +32,7 @@ end
 class WriteAuditLogs < BaseActivity
   def self.do_execute(context)
     puts "update inventory logs of the movement"
-    context.add("audited", true)
+    context["audited"] = true
   end
 end
 
