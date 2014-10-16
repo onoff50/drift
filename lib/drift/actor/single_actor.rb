@@ -2,8 +2,13 @@ module Drift
 
   class SingleActor < BaseActor
 
-    def initialize(single_activity, act, id, async)
-      create_metadata(single_activity, act, id, async)
+    #args:
+    # single_activity class
+    # act class name
+    # actor id (String)
+    # async as boolean
+    def initialize(*args)
+      create_metadata(args[0], args[1], args[2], args[3])
     end
 
     def do_action(context)

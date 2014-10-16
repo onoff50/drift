@@ -42,8 +42,8 @@ module Drift
     end
 
     protected
-    def register_base_actor_metadata(act, id, async)
-      @metadata.act = act
+    def register_base_actor_metadata(act_name, id, async)
+      @metadata.act_name = act_name
       @metadata.id = id
       @metadata.async = async
     end
@@ -55,15 +55,15 @@ module Drift
 
     def post_action(context, activity)
       next_actor = @metadata.next_actor activity
-      act.execute_next next_actor, context unless next_actor.nil?
+      act_class.execute_next next_actor, context unless next_actor.nil?
     end
 
     def async?
       @metadata.async
     end
 
-    def act
-      Kernel.const_get(@metadata.act)
+    def act_class
+      Kernel.const_get(@metadata.act_name)
     end
 
   end

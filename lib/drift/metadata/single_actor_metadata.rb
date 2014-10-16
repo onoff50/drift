@@ -16,7 +16,7 @@ module Drift
               'async' => @async,
               'id' => @id,
               'single_activity' => @single_activity,
-              'act' => @act
+              'act_name' => @act_name
           }
       }.to_json(*args)
     end
@@ -27,7 +27,7 @@ module Drift
       obj.async = json_data_hash['async']
       obj.id = json_data_hash['id']
       obj.single_activity = json_data_hash['single_activity']
-      obj.act = Kernel.const_get(json_data_hash['act'])
+      obj.act_name = json_data_hash['act_name']
       obj
     end
 

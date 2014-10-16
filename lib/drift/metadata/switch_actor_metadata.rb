@@ -15,7 +15,7 @@ module Drift
               'next_actor_map' => @next_actor_map,
               'async' => @async,
               'id' => @id,
-              'act' => @act,
+              'act_name' => @act_name,
               'activities' => activity_class_to_name(@activities),
               'condition' => @condition.to_source
           }
@@ -29,7 +29,7 @@ module Drift
       obj.id = json_data_hash['id']
       obj.activities = activity_name_to_class json_data_hash['activities']
       obj.condition = eval(json_data_hash['condition'])
-      obj.act = Kernel.const_get(json_data_hash['act'])
+      obj.act_name = json_data_hash['act_name']
       obj
     end
 

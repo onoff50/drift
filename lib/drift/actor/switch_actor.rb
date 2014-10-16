@@ -5,11 +5,11 @@ module Drift
     #args:
     # activities [class]
     # condition code block
-    # act class
+    # act class name
     # actor id (String)
     # async as boolean
-    def initialize(activities, condition, act, id, async)
-      create_metadata(activities, condition, act, id, async)
+    def initialize(*args)
+      create_metadata(args[0], args[1], args[2], args[3], args[4])
     end
 
     def do_action(context)
@@ -29,9 +29,9 @@ module Drift
     end
 
     private
-    def create_metadata(activities, condition, act, id, async)
+    def create_metadata(activities, condition, act_name, id, async)
       @metadata = SwitchActorMetadata.new
-      register_base_actor_metadata(act, id, async)
+      register_base_actor_metadata(act_name, id, async)
       @metadata.activities = activities
       @metadata.condition = condition
     end

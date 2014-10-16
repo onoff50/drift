@@ -6,7 +6,7 @@ module Drift
     # then_activity class
     # else_activity class
     # condition code block
-    # act class
+    # act class name
     # actor id (String)
     # async as boolean
     def initialize(*args)

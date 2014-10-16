@@ -15,7 +15,7 @@ module Drift
               'next_actor_map' => @next_actor_map,
               'async' => @async,
               'id' => @id,
-              'act' => @act,
+              'act_name' => @act_name,
               'then_activity' => @then_activity.name,
               'else_activity' => @else_activity.name,
               'condition' => @condition.to_source
@@ -31,7 +31,7 @@ module Drift
       obj.then_activity = Kernel.const_get(json_data_hash['then_activity'])
       obj.else_activity = Kernel.const_get(json_data_hash['else_activity'])
       obj.condition = eval(json_data_hash['condition'])
-      obj.act = Kernel.const_get(json_data_hash['act'])
+      obj.act_name = json_data_hash['act_name']
       obj
     end
 

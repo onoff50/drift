@@ -2,7 +2,7 @@ module Drift
 
   class ActorMetadata
 
-    attr_accessor :next_actor_map, :async, :id, :act
+    attr_accessor :next_actor_map, :async, :id, :act_name
 
     def initialize
       @next_actor_map = {}
@@ -30,7 +30,7 @@ module Drift
               'next_actor_map' => @next_actor_map,
               'async' => @async,
               'id' => @id,
-              'act' => @act
+              'act_name' => @act_name
           }
       }.to_json(*args)
     end
@@ -40,7 +40,7 @@ module Drift
       obj.next_actor_map = json_data_hash['next_actor_map']
       obj.async = json_data_hash['async']
       obj.id = json_data_hash['id']
-      obj.act = Kernel.const_get(json_data_hash['act'])
+      obj.act_name = json_data_hash['act_name']
       obj
     end
 
