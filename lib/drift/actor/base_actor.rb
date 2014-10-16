@@ -1,29 +1,22 @@
 module Drift
   class BaseActor
-    include Sidekiq::Worker
+    include Sidekiq::Worker, Singleton
 
-    attr_accessor :id, :act, :metadata
+    attr_accessor :metadata
 
-    #args:
-    # act class name
-    # async as boolean
-    def initialize(act, id, async)
-      @act = act
-      @id = id
-      create_metadata(async)
+    def initialize
+      raise DriftException, 'BaseActor not supposed to be initialized'
     end
 
     def execute context
       if async?
-        perform_async context, @act, @id, @metadata
+        perform_async context, @metadata
       else
         perform context
       end
     end
 
-    def perform(context, act = nil, id = nil, metadata = nil)
-      @act = act unless act.nil?
-      @id = id unless id.nil?
+    def perform(context, metadata = nil)
       @metadata = metadata unless metadata.nil?
 
       pre_action context
@@ -44,6 +37,13 @@ module Drift
       raise DriftException, 'Not Implemented'
     end
 
+    protected
+    def register_base_actor_metadata(act, id, async)
+      @metadata.act = act
+      @metadata.id = id
+      @metadata.async = async
+    end
+
     private
     def pre_action(context)
       #implement if required
@@ -51,16 +51,19 @@ module Drift
 
     def post_action(context, activity)
       next_actor = @metadata.next_actor activity
-      @act.execute_next next_actor, context
-    end
-
-    def create_metadata(async)
-      @metadata = ActorMetadata.new
-      @metadata.async = async
+      act.execute_next next_actor, context
     end
 
     def async?
       @metadata.async
+    end
+
+    def id
+      @metadata.id
+    end
+
+    def act
+      Kernel.const_get(@metadata.act)
     end
 
   end

@@ -13,14 +13,14 @@ module Drift
       @act_metadata = ActMetadata.new
 
       def execute(context)
-        @start.perform context
+        @start.execute context
       end
 
       #args
       # next actor_id
       # context
       def execute_next(actor_id, context)
-        @act_metadata.actor(actor_id).perform context
+        @act_metadata.actor(actor_id).execute context
       end
 
       #args

@@ -1,6 +1,7 @@
 require 'sidekiq'
 require 'json'
 require 'sourcify'
+require 'singleton'
 
 require_relative 'drift/version'
 
@@ -24,7 +25,10 @@ require_relative 'drift/config/database'
 require_relative 'drift/metadata/act_metadata'
 require_relative 'drift/metadata/base_actor_metadata'
 require_relative 'drift/metadata/condition_actor_metadata'
+require_relative 'drift/metadata/single_actor_metadata'
 require_relative 'drift/metadata/switch_actor_metadata'
+
+require_relative 'drift/middleware/server_middleware'
 
 $logger = (defined? logger) ? logger : Logger.new(STDOUT)
 
