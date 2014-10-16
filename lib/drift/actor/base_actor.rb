@@ -1,6 +1,6 @@
 module Drift
   class BaseActor
-    include Sidekiq::Worker, Singleton
+    include Sidekiq::Worker
 
     attr_accessor :metadata
 
@@ -32,6 +32,10 @@ module Drift
       @metadata.register_next_actor actor, activity
     end
 
+    def id
+      @metadata.id
+    end
+
     protected
     def do_action(context)
       raise DriftException, 'Not Implemented'
@@ -56,10 +60,6 @@ module Drift
 
     def async?
       @metadata.async
-    end
-
-    def id
-      @metadata.id
     end
 
     def act

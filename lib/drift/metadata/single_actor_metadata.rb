@@ -1,6 +1,6 @@
 module Drift
 
-  class SingleActorMetadata
+  class SingleActorMetadata < ActorMetadata
 
     attr_accessor :single_activity
 

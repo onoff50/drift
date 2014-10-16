@@ -12,6 +12,12 @@ require_relative 'drift/actor/single_actor'
 require_relative 'drift/actor/condition_actor'
 require_relative 'drift/actor/switch_actor'
 
+require_relative 'drift/metadata/act_metadata'
+require_relative 'drift/metadata/actor_metadata'
+require_relative 'drift/metadata/conditional_actor_metadata'
+require_relative 'drift/metadata/single_actor_metadata'
+require_relative 'drift/metadata/switch_actor_metadata'
+
 require_relative 'drift/context/base_context'
 
 require_relative 'drift/act/base_act'
@@ -21,12 +27,6 @@ require_relative 'drift/helper/drift_helper'
 require_relative 'drift/exception/drift_exception'
 
 require_relative 'drift/config/database'
-
-require_relative 'drift/metadata/act_metadata'
-require_relative 'drift/metadata/base_actor_metadata'
-require_relative 'drift/metadata/condition_actor_metadata'
-require_relative 'drift/metadata/single_actor_metadata'
-require_relative 'drift/metadata/switch_actor_metadata'
 
 require_relative 'drift/middleware/server_middleware'
 

@@ -9,8 +9,6 @@ module Drift
       include DriftHelper
 
       attr_accessor :start, :act_metadata
-      @start = nil
-      @act_metadata = ActMetadata.new
 
       def execute(context)
         @start.execute context
@@ -20,12 +18,14 @@ module Drift
       # next actor_id
       # context
       def execute_next(actor_id, context)
+        raise DriftException, "No registered actor found" if @act_metadata.nil?
         @act_metadata.actor(actor_id).execute context
       end
 
       #args
       # actor instance
       def register_actor(actor)
+        @act_metadata = ActMetadata.new if @act_metadata.nil?
         @act_metadata.register_actor actor
       end
 
