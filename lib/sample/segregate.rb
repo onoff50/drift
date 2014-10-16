@@ -46,10 +46,13 @@ class Segregate < BaseAct
   a2 = switch_actor({"supplier_return" => SupplierReturn, "liquidate" => Liquidate, "refurbish" => Refurbish}, c1, self.name, 1)
   a3 = single_actor(WriteAuditLogs, self.name, 2)
 
-  @actors = {
-      :start => a1,
-      0 => {:next_actor_map => {:default => a2}},
-      1 => {:next_actor_map => {:default => a3}}
-  }
+  Segregate.start = a1
+  Segregate.register_actor a1
+  Segregate.register_actor a2
+  Segregate.register_actor a3
+
+  a1.register_next_actor a2
+  a2.register_next_actor a3
+
 end
 

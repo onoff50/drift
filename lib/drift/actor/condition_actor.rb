@@ -20,7 +20,7 @@ module Drift
 
     private
     def execute_else_activity(context)
-      else_activity.perform(context) if @else_activity
+      else_activity.perform(context) if else_activity
       else_activity
     end
 

@@ -19,7 +19,7 @@ module Drift
       # context
       def execute_next(actor_id, context)
         raise DriftException, "No registered actor found" if @act_metadata.nil?
-        @act_metadata.actor(actor_id).execute context
+        @act_metadata.actor(actor_id).execute(context)  unless @act_metadata.actor(actor_id).nil?
       end
 
       #args

@@ -55,7 +55,7 @@ module Drift
 
     def post_action(context, activity)
       next_actor = @metadata.next_actor activity
-      act.execute_next next_actor, context
+      act.execute_next next_actor, context unless next_actor.nil?
     end
 
     def async?

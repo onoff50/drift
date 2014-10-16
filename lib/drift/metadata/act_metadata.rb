@@ -18,6 +18,7 @@ module Drift
     #args
     # actor id
     def actor(id)
+      $logger.info "ACTOR ID #{id}"
       @actors[id]
     end
 

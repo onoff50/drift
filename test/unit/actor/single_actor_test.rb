@@ -4,8 +4,8 @@ class SingleActorTest < BaseDriftTest
   include Drift
 
   def test_for_single_activity
-    @condition_actor = SingleActor.new(AddWater)
-    assert_equal 'Added 2 cups water to the recipe', @condition_actor.action(BaseContext.new({}))['water']
+    @condition_actor = SingleActor.new(AddWater, SampleAct.name, 20, false)
+    assert_equal 'Added 2 cups water to the recipe', @condition_actor.execute(BaseContext.new({}))['water']
   end
 
   def test_next_actor

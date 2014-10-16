@@ -1,6 +1,5 @@
 include Drift
 class AddWater < Drift::BaseActivity
-
   def self.do_execute(context)
     context.add('water', 'Added 2 cups water to the recipe')
   end
@@ -31,11 +30,14 @@ class NoodlePreparation < BaseAct
   a3 = single_actor(AddSpices, self.name, 2)
   a4 = single_actor(CookForFiveMins, self.name, 3)
 
-  @actors = {
-      :start => a1,
-      0 => {:next_actor_map => {:default => a2}},
-      1 => {:next_actor_map => {:default => a3}},
-      2 => {:next_actor_map => {:default => a4}}
-  }
+  NoodlePreparation.start = a1
+  NoodlePreparation.register_actor a1
+  NoodlePreparation.register_actor a2
+  NoodlePreparation.register_actor a3
+  NoodlePreparation.register_actor a4
+
+  a1.register_next_actor a2
+  a2.register_next_actor a3
+  a3.register_next_actor a4
 
 end

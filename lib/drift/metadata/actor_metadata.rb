@@ -20,8 +20,7 @@ module Drift
     #args:
     # activity class name
     def next_actor(activity = 'default')
-      raise DriftException, 'no next actor for null activity' if activity.nil?
-      @next_actor_map[activity.to_sym] || @next_actor_map[:default]
+      @next_actor_map[activity.nil? ? nil : activity.name.to_sym] || @next_actor_map[:default]
     end
 
     def marshal_dump
