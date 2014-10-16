@@ -17,11 +17,8 @@ module Drift
       activity = activities[val]
 
       if activity.nil?
-        if activities[:default].nil?
-          raise DriftException, "No default activity found for switch val = #{val}"
-        else
-          activity = activities[:default]
-        end
+        activity = activities[:default]
+        raise DriftException, "No default activity found for switch val = #{val}" if activity.nil?
       end
 
       activity.perform(context)

@@ -31,9 +31,9 @@ module Drift
     end
 
     private
-    def create_metadata(then_activity, else_activity, condition, act, id, async)
+    def create_metadata(then_activity, else_activity, condition, act_name, id, async)
       @metadata = ConditionalActorMetadata.new
-      register_base_actor_metadata(act, id, async)
+      register_base_actor_metadata(act_name, id, async)
       @metadata.then_activity = then_activity
       @metadata.else_activity = else_activity
       @metadata.condition = condition

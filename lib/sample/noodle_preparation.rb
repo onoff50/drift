@@ -31,10 +31,7 @@ class NoodlePreparation < BaseAct
   a4 = single_actor(CookForFiveMins, self.name, 3)
 
   NoodlePreparation.start = a1
-  NoodlePreparation.register_actor a1
-  NoodlePreparation.register_actor a2
-  NoodlePreparation.register_actor a3
-  NoodlePreparation.register_actor a4
+  NoodlePreparation.register_actors a1, a2, a3, a4
 
   a1.register_next_actor a2
   a2.register_next_actor a3

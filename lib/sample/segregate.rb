@@ -47,12 +47,9 @@ class Segregate < BaseAct
   a3 = single_actor(WriteAuditLogs, self.name, 2)
 
   Segregate.start = a1
-  Segregate.register_actor a1
-  Segregate.register_actor a2
-  Segregate.register_actor a3
+  Segregate.register_actors a1, a2, a3
 
   a1.register_next_actor a2
   a2.register_next_actor a3
 
 end
-

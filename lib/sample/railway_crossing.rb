@@ -49,16 +49,11 @@ class RailwayCrossing < BaseAct
   a4 = condition_actor(WaitForTrain, CrossNow, condition3, self.name, 3)
 
   RailwayCrossing.start = a1
-  RailwayCrossing.register_actor a1
-  RailwayCrossing.register_actor a2
-  RailwayCrossing.register_actor a3
-  RailwayCrossing.register_actor a4
+  RailwayCrossing.register_actors a1, a2, a3, a4
 
   a1.register_next_actor(a2)
   a2.register_next_actor(a3, 'WaitForTrain')
   a2.register_next_actor(a4, 'LookRight')
-
-
 
 end
 

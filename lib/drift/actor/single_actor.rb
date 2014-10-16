@@ -17,9 +17,9 @@ module Drift
     end
 
     private
-    def create_metadata(single_activity, act, id, async)
+    def create_metadata(single_activity, act_name, id, async)
       @metadata = SingleActorMetadata.new
-      register_base_actor_metadata(act, id, async)
+      register_base_actor_metadata(act_name, id, async)
       @metadata.single_activity = single_activity
     end
 

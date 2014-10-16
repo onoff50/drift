@@ -23,10 +23,12 @@ module Drift
       end
 
       #args
-      # actor instance
-      def register_actor(actor)
+      # actor instance list
+      def register_actors(*actors)
         @act_metadata = ActMetadata.new if @act_metadata.nil?
-        @act_metadata.register_actor actor
+        actors.each do |actor|
+          @act_metadata.register_actor actor
+        end
       end
 
     end

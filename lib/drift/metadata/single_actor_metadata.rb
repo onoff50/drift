@@ -22,7 +22,7 @@ module Drift
     end
 
     def self.json_create(json_data_hash)
-      obj = new()
+      obj = new
       obj.next_actor_map = json_data_hash['next_actor_map']
       obj.async = json_data_hash['async']
       obj.id = json_data_hash['id']

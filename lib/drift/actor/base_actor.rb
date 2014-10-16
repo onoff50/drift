@@ -28,8 +28,8 @@ module Drift
     #args:
     # actor object
     # activity class name
-    def register_next_actor(actor, activity = 'default')
-      @metadata.register_next_actor actor, activity
+    def register_next_actor(actor, activity_name = 'default')
+      @metadata.register_next_actor actor, activity_name
     end
 
     def id
