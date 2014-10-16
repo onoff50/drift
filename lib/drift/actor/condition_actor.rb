@@ -9,8 +9,8 @@ module Drift
     # act class
     # actor id (String)
     # async as boolean
-    def initialize(then_activity, else_activity, condition, current_act, id, async)
-      create_metadata(then_activity, else_activity, condition, current_act, id, async)
+    def initialize(*args)
+      create_metadata(args[0], args[1], args[2], args[3], args[4], args[5])
     end
 
     def do_action(context)
@@ -53,6 +53,8 @@ module Drift
     def condition
       @metadata.condition
     end
+
+
 
   end
 

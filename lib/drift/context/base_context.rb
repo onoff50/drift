@@ -33,5 +33,13 @@ module Drift
       @context.size
     end
 
+    def to_json(*args)
+       @context.to_json
+    end
+
+    def self.json_create args
+      new args
+    end
+
   end
 end

@@ -49,11 +49,16 @@ end
 module Sidekiq
 
   def self.load_json(string)
-    Marshal.load(string)
+    class_hash = JSON.parse(string)
+    class_hash_context = class_hash['args'][0]
+    class_hash['args'][0] = BaseContext.json_create class_hash_context
+    class_hash_metadata = class_hash['args'][1]
+    class_hash['args'][1] = Kernel.const_get(class_hash_metadata['json_class']).json_create(class_hash_metadata['data'])
+    class_hash
   end
 
   def self.dump_json(object)
-    Marshal.dump(object)
+    JSON.generate(object)
   end
 
 end

@@ -1,4 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../base_drift_test')
+#Sidekiq::Testing.inline!
+Sidekiq::Testing.disable!
 
 class RailwayCrossingTest < BaseDriftTest
 
@@ -7,8 +9,6 @@ class RailwayCrossingTest < BaseDriftTest
     LookLeft.expects(:do_execute).with(ctx)
 
     RailwayCrossing.execute(ctx)
-
-    assert_equal true, ctx['wait']
   end
 
   def test_one

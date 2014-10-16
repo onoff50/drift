@@ -44,7 +44,7 @@ class RailwayCrossing < BaseAct
   end
 
   a1 = single_actor(LookLeft, self.name, 'look_left')
-  a2 = condition_actor(WaitForTrain, LookRight, condition1, self.name, 10)
+  a2 = condition_actor(WaitForTrain, LookRight, condition1, self.name, 10, true)
   a3 = condition_actor(LookRight, nil, condition2, self.name, 2)
   a4 = condition_actor(WaitForTrain, CrossNow, condition3, self.name, 3)
 

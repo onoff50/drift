@@ -23,12 +23,25 @@ module Drift
       @next_actor_map[activity.nil? ? nil : activity.name.to_sym] || @next_actor_map[:default]
     end
 
-    def marshal_dump
-      [@next_actor_map, @async, @id, @act.name]
+    def to_json(*args)
+      {
+          'json_class'   => self.class.name,
+          'data' => {
+              'next_actor_map' => @next_actor_map,
+              'async' => @async,
+              'id' => @id,
+              'act' => @act
+          }
+      }.to_json(*args)
     end
 
-    def marshal_load attr_array
-      @next_actor_map, @async, @id, @act = attr_array
+    def self.json_create(json_data_hash)
+      obj = new()
+      obj.next_actor_map = json_data_hash['next_actor_map']
+      obj.async = json_data_hash['async']
+      obj.id = json_data_hash['id']
+      obj.act = Kernel.const_get(json_data_hash['act'])
+      obj
     end
 
   end

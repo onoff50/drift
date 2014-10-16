@@ -15,7 +15,6 @@ class BaseActTest < BaseDriftTest
   def test_single_run
     args = {}
     ctx = BaseContext.new(args)
-    puts "META #{BaseAct.act_metadata.inspect}"
     BaseAct.execute(ctx)
     assert_equal 'Added 2 cups water to the recipe', ctx['water']
     assert_equal 'Added maggie noodles', ctx['noodles']
