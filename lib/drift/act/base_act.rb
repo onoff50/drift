@@ -1,12 +1,8 @@
-require_relative "../helper/drift_helper"
-
 module Drift
 
   class BaseAct
 
     class << self
-
-      include DriftHelper
 
       attr_accessor :start, :act_metadata
 
