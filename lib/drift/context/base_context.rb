@@ -13,8 +13,8 @@ module Drift
 
     def []=(key, value)
       $logger.info "Writing to context KEY = #{key}, VALUE = #{value.inspect}"
-      raise DriftException, 'Key can not be nil' if key.nil?
-      @context.merge!(key => value) if (key.present?)
+      raise DriftException, 'Key can not be nil or empty' if (key.nil? || key.empty?)
+      @context.merge!(key => value)
     end
 
     def size
