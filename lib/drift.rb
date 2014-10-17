@@ -29,6 +29,7 @@ require_relative 'drift/exception/drift_exception'
 require_relative 'drift/config/database'
 
 require_relative 'drift/middleware/server_middleware'
+require_relative 'drift/middleware/client_middleware'
 
 $logger = (defined? logger) ? logger : Logger.new(STDOUT)
 
@@ -39,11 +40,19 @@ Sidekiq.configure_server do |config|
   config.server_middleware do |chain|
     chain.add Drift::ServerMiddleware
   end
+
+  config.client_middleware do |chain|
+    chain.add Drift::ClientMiddleware
+  end
 end
 
 Sidekiq.configure_client do |config|
   $logger.info 'INITIALIZING REDIS'
   config.redis = { namespace:  'drift', size: 1, url: "redis://#{DB_DEFAULTS[:host]}:#{DB_DEFAULTS[:port]}/12" }
+
+  config.client_middleware do |chain|
+    chain.add Drift::ClientMiddleware
+  end
 end
 
 module Sidekiq
@@ -65,7 +74,6 @@ end
 
 
 module Drift
-  # Your code goes here...
 
 end
 
