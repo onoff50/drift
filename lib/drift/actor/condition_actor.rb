@@ -10,7 +10,11 @@ module Drift
     # actor id (String)
     # async as boolean
     def initialize(*args)
-      create_metadata(args[0], args[1], args[2], args[3], args[4], args[5])
+      if args.length > 0
+        raise DriftException, 'args[0] should be an Activity Class' unless args[0].is_a? Class
+        raise DriftException, 'args[1] should be an Activity/Nil Class' unless (args[1].is_a? Class) || (args[1].is_a? NilClass)
+        create_metadata(args[0], args[1], args[2], args[3], args[4], args[5])
+      end
     end
 
     def do_action(context)
@@ -32,6 +36,7 @@ module Drift
 
     private
     def create_metadata(then_activity, else_activity, condition, act_name, id, async)
+
       @metadata = ConditionalActorMetadata.new
       register_base_actor_metadata(act_name, id, async)
       @metadata.then_activity = then_activity

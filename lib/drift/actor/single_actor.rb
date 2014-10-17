@@ -8,7 +8,10 @@ module Drift
     # actor id (String)
     # async as boolean
     def initialize(*args)
-      create_metadata(args[0], args[1], args[2], args[3])
+      if args.length > 0
+        raise DriftException, 'args[0] should be an Activity Class' unless args[0].is_a? Class
+        create_metadata(args[0], args[1], args[2], args[3])
+      end
     end
 
     def do_action(context)

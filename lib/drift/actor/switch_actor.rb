@@ -3,13 +3,16 @@ module Drift
   class SwitchActor < BaseActor
 
     #args:
-    # activities [class]
+    # activities hash ['key' => Activity Class]
     # condition code block
     # act class name
     # actor id (String)
     # async as boolean
     def initialize(*args)
-      create_metadata(args[0], args[1], args[2], args[3], args[4])
+      if args.length > 0
+        validate_activity_list_arg args[0]
+        create_metadata(args[0], args[1], args[2], args[3], args[4])
+      end
     end
 
     def do_action(context)
@@ -41,6 +44,14 @@ module Drift
     private
     def condition
       @metadata.condition
+    end
+
+    private
+    def validate_activity_list_arg arg_list
+      raise DriftException, 'args[0] should be an Activity Class Hash' unless arg_list.is_a? Hash
+      arg_list.each do |key, activity|
+        raise DriftException, "args[0][#{key}] should be an Activity Class" unless activity.is_a? Class
+      end
     end
 
   end
