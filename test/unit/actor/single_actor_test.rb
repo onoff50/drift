@@ -12,4 +12,8 @@ class SingleActorTest < BaseDriftTest
 
   end
 
+  def test_rollback_actor
+
+  end
+
 end

@@ -19,6 +19,7 @@ module Drift
 
     def do_action(context)
       condition_satisfied = condition.call(context)
+      $logger.info "CONTEXTz : #{context}"
       condition_satisfied ? execute_then_activity(context) : execute_else_activity(context)
     end
 

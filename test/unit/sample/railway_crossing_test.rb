@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../base_drift_test')
-#Sidekiq::Testing.inline!
-Sidekiq::Testing.disable!
+# Sidekiq::Testing.inline!
+Sidekiq::Testing.fake!
 
 class RailwayCrossingTest < BaseDriftTest
 

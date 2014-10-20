@@ -20,7 +20,13 @@ module Drift
       @metadata = metadata unless metadata.nil?
 
       pre_action context
-      activity = do_action context
+      begin
+        activity = do_action context
+      rescue
+        @metadata.rollback_actor.execute context
+        raise DriftException, "Actor #{self.inspect} failed while performing with context #{context.inspect}"
+      end
+
       post_action context, activity
       context
     end
@@ -30,6 +36,12 @@ module Drift
     # activity class name
     def register_next_actor(actor, activity_name = 'default')
       @metadata.register_next_actor actor, activity_name
+    end
+
+    #args:
+    # actor object
+    def register_rollback_actor actor
+      @metadata.rollback_actor = actor
     end
 
     def id
@@ -55,6 +67,7 @@ module Drift
 
     def post_action(context, activity)
       next_actor = @metadata.next_actor activity
+      $logger.info "NEXT ACTOR: #{next_actor}"
       act_class.execute_next next_actor, context unless next_actor.nil?
     end
 

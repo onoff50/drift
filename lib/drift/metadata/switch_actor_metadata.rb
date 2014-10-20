@@ -13,6 +13,7 @@ module Drift
           'json_class'   => self.class.name,
           'data' => {
               'next_actor_map' => @next_actor_map,
+              'rollback_actor' => @rollback_actor,
               'async' => @async,
               'id' => @id,
               'act_name' => @act_name,
@@ -25,6 +26,7 @@ module Drift
     def self.json_create(json_data_hash)
       obj = new
       obj.next_actor_map = json_data_hash['next_actor_map']
+      obj.rollback_actor = json_data_hash['rollback_actor']
       obj.async = json_data_hash['async']
       obj.id = json_data_hash['id']
       obj.activities = activity_name_to_class json_data_hash['activities']
