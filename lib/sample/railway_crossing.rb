@@ -3,13 +3,13 @@ include Drift
 
 class LookLeft < BaseActivity
   def self.do_execute(context)
-    Random.rand(10) / 2 == 1 ? context['train_on_left']= true : context['train_on_left']= false
+    Random.rand(10) % 2 == 1 ? context['train_on_left']= true : context['train_on_left']= false
   end
 end
 
 class LookRight < BaseActivity
   def self.do_execute(context)
-    Random.rand(10) / 2 == 1 ? context['train_on_right']= true : context['train_on_right']= false
+    Random.rand(10) % 2 == 1 ? context['train_on_right']= true : context['train_on_right']= false
   end
 end
 

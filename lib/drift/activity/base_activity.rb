@@ -7,19 +7,23 @@ module Drift
       undef_method :new
 
       def perform(context)
-        pre_activity context
-        do_execute context
-        post_activity context
+        begin
+          pre_activity context
+          do_execute context
+          post_activity context
+        rescue
+          raise DriftException, "#{single_activity.inspect} failed while performing"
+        end
       end
 
       def pre_activity(context)
         $logger.info "Entering #{self.name} Activity."
-        $logger.info "INPUT #{context}"
+        $logger.info "INPUT #{context.inspect}"
       end
 
       def post_activity(context)
         $logger.info "Exiting #{self.name} Activity."
-        $logger.info "OUTPUT #{context}"
+        $logger.info "OUTPUT #{context.inspect}"
       end
 
       def do_execute(context)
