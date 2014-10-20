@@ -5,6 +5,7 @@ class TestActor < BaseActor
 end
 class BaseActorTest < BaseDriftTest
 
+  #todo: add new test cases
   #setup do
   #  @base_actor = TestActor.new
   #  @sample_context = {:a => 'b'}

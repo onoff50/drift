@@ -4,7 +4,7 @@ class SwitchActorTest < BaseDriftTest
   include Drift
 
   def test_switching_action_act_on_2_for_beta
-    cond1 = Proc.new {'beta'}
+    cond1 = Proc.new { 'beta' }
 
     switch_actor = SwitchActor.new({'alpha' => AddWater, 'beta' => AddNoodles, 'gamma' => AddSpices, :default => CookForFiveMins}, cond1, SampleAct.name, 20, false)
     a = switch_actor.execute(BaseContext.new({}))
@@ -14,7 +14,7 @@ class SwitchActorTest < BaseDriftTest
   end
 
   def test_switching_action_act_on_4_for_other
-    cond1 = Proc.new {'other'}
+    cond1 = Proc.new { 'other' }
 
     switch_actor = SwitchActor.new({'alpha' => AddWater, 'beta' => AddNoodles, 'gamma' => AddSpices, :default => CookForFiveMins}, cond1, SampleAct.name, 20, false)
     a = switch_actor.execute(BaseContext.new({}))
@@ -25,7 +25,7 @@ class SwitchActorTest < BaseDriftTest
   end
 
   def test_switching_action_act_on_4_for_default
-    cond1 = Proc.new {:default}
+    cond1 = Proc.new { :default }
     switch_actor = SwitchActor.new({'alpha' => AddWater, 'beta' => AddNoodles, 'gamma' => AddSpices, :default => CookForFiveMins}, cond1, SampleAct.name, 20, false)
     a = switch_actor.execute(BaseContext.new({}))
     assert_equal 'Cook on gas for five minutes', a['cook']
@@ -35,6 +35,15 @@ class SwitchActorTest < BaseDriftTest
   end
 
 #  todo: test for next actors
+  def test_do_action
 
+  end
 
+  def test_create_metadata
+
+  end
+
+  def test_validate_activity_list_arg
+
+  end
 end

@@ -48,7 +48,7 @@ module Drift
 
     private
     def validate_activity_list_arg arg_list
-      raise DriftException, 'args[0] should be an Activity Class Hash' unless arg_list.is_a? Hash
+      raise DriftException, 'args[0] should be an Activity Class Hash - [\'key\' => Activity_Class]' unless arg_list.is_a? Hash
       arg_list.each do |key, activity|
         raise DriftException, "args[0][#{key}] should be an Activity Class" unless activity.is_a? Class
       end

@@ -21,4 +21,13 @@ class BaseActTest < BaseDriftTest
     assert_nil args['water']
     assert_nil args['noodles']
   end
+
+  def test_execute_next
+
+  end
+
+  def test_register_actors
+
+  end
+
 end

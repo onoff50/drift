@@ -2,6 +2,13 @@ module Drift
 
   class ConditionActor < BaseActor
 
+    THEN_ACTIVITY = 0
+    ELSE_ACTIVITY = 1
+    CONDITION = 2
+    ACT_NAME = 3
+    SELF_ID = 4
+    ASYNC = 5
+
     #args:
     # then_activity class
     # else_activity class
@@ -13,7 +20,7 @@ module Drift
       if args.length > 0
         raise DriftException, 'args[0] should be an Activity Class' unless args[0].is_a? Class
         raise DriftException, 'args[1] should be an Activity/Nil Class' unless (args[1].is_a? Class) || (args[1].is_a? NilClass)
-        create_metadata(args[0], args[1], args[2], args[3], args[4], args[5])
+        create_metadata(args[THEN_ACTIVITY], args[ELSE_ACTIVITY], args[CONDITION], args[ACT_NAME], args[SELF_ID], args[ASYNC])
       end
     end
 

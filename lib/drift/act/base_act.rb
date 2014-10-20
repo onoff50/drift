@@ -14,6 +14,7 @@ module Drift
       # next actor_id
       # context
       def execute_next(actor_id, context)
+        #todo: fix exception msg and logging for last node
         raise DriftException, "No registered actor found" if @act_metadata.nil?
         @act_metadata.actor(actor_id).execute(context)  unless @act_metadata.actor(actor_id).nil?
       end

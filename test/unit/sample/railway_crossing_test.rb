@@ -13,7 +13,7 @@ class RailwayCrossingTest < BaseDriftTest
 
   def test_one
     10.times do |i|
-       puts "Attempt number #{i}"
+       $logger.info "Attempt number #{i}"
        RailwayCrossing.execute(BaseContext.new({'start' => 'true'}))
      end
   end

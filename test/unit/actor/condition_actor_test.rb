@@ -8,20 +8,26 @@ class ConditionActorTest < BaseDriftTest
       SampleTestService.sampleTestMethod(args)
     end
 
+    @args = [AddWater, AddNoodles, @condition, SampleAct.name, 20, false]
+
     @add_water_actor = single_actor(AddWater, SampleAct.name, 20, false)
     @add_noddle_actor = single_actor(AddNoodles, SampleAct.name, 20, false)
   end
 
   def test_for_then_activity
-    condition_actor = ConditionActor.new(AddWater, AddNoodles, @condition, SampleAct.name, 20, false)
+    condition_actor = ConditionActor.new(*@args)
     context = condition_actor.execute(BaseContext.new({}))
     assert_equal context['water'], 'Added 2 cups water to the recipe'
   end
 
   def test_for_else_activity
-    condition_actor = Drift::ConditionActor.new(AddWater, AddNoodles, @condition, SampleAct.name, 20, false)
-    context = condition_actor.execute(BaseContext.new({'water' => 'already present'}))
+    condition_actor = Drift::ConditionActor.new(*@args)
+    ctx = BaseContext.new({'water' => 'already present'})
+    context = condition_actor.execute(ctx)
     assert_equal context['noodles'], 'Added maggie noodles'
+    #ensuring that write happening in same context
+    assert_equal ctx['noodles'], 'Added maggie noodles'
+    assert_equal ctx, context
   end
 
   def test_for_null_else_activity

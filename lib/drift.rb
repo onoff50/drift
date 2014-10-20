@@ -35,7 +35,10 @@ $logger = (defined? logger) ? logger : Logger.new(STDOUT)
 
 Sidekiq.configure_server do |config|
   $logger.info 'INITIALIZING REDIS'
-  config.redis = { namespace:  'drift', size: 25,url: "redis://#{DB_DEFAULTS[:host]}:#{DB_DEFAULTS[:port]}/12" }
+  config.redis = {   namespace:  DB_DEFAULTS[:namespace],
+                     size: DB_DEFAULTS[:pool],
+                     url: "redis://#{DB_DEFAULTS[:host]}:#{DB_DEFAULTS[:port]}/#{DB_DEFAULTS[:database]}"
+  }
 
   config.server_middleware do |chain|
     chain.add Drift::ServerMiddleware
@@ -48,7 +51,10 @@ end
 
 Sidekiq.configure_client do |config|
   $logger.info 'INITIALIZING REDIS'
-  config.redis = { namespace:  'drift', size: 1, url: "redis://#{DB_DEFAULTS[:host]}:#{DB_DEFAULTS[:port]}/12" }
+  config.redis = { namespace:  DB_DEFAULTS[:namespace],
+                   size: DB_DEFAULTS[:pool],
+                   url: "redis://#{DB_DEFAULTS[:host]}:#{DB_DEFAULTS[:port]}/#{DB_DEFAULTS[:database]}"
+  }
 
   config.client_middleware do |chain|
     chain.add Drift::ClientMiddleware
