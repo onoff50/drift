@@ -32,6 +32,14 @@ module Drift
       @metadata.register_next_actor actor, value
     end
 
+    #args:
+    # actor object
+    def register_side_actors(*actors)
+      actors.each do |actor|
+        @metadata.register_side_actor actor
+      end
+    end
+
     def id
       @metadata.id
     end
@@ -57,6 +65,10 @@ module Drift
     end
 
     def post_action(context, block_val)
+      @metadata.side_actor_list.each do |side_actor|
+        act_class.execute_next side_actor, context
+      end
+
       next_actor = @metadata.next_actor block_val
       act_class.execute_next next_actor, context unless next_actor.nil?
     end

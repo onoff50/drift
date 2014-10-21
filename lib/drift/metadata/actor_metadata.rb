@@ -2,11 +2,15 @@ module Drift
 
   class ActorMetadata
 
-    attr_accessor :next_actor_map, :async, :id, :act_name
+    #
+    # side actors should be of async type (fire and forget)
+    # they will get fired only after successful do_action
+    attr_accessor :next_actor_map, :async, :id, :act_name, :side_actor_list
 
     def initialize
       @next_actor_map = {}
       @async = false
+      @side_actor_list = []
     end
 
     #args:
@@ -14,6 +18,12 @@ module Drift
     # block value
     def register_next_actor(actor, value = nil)
       @next_actor_map[value] = actor.id
+    end
+
+    #args:
+    # actor object
+    def register_side_actor(actor)
+      @side_actor_list << actor.id
     end
 
     #args:

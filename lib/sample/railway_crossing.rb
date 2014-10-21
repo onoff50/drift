@@ -28,6 +28,13 @@ class WaitForTrain < BaseActivity
   end
 end
 
+class SayHi < BaseActivity
+  def self.do_execute(context)
+    $logger.info 'Saying Hi...'
+    context['say']= 'hi'
+  end
+end
+
 
 class RailwayCrossing < BaseAct
 
@@ -52,6 +59,8 @@ class RailwayCrossing < BaseAct
   a5 = single_actor WaitForTrain
   a6 = single_actor CrossNow
 
+  a7 = single_actor SayHi, false
+
   s1 = switch_actor condition1
   s2 = switch_actor condition2
   s3 = switch_actor condition3
@@ -59,6 +68,7 @@ class RailwayCrossing < BaseAct
   #
   # next actor registration
   a1.register_next s1
+  a1.register_side_actors a7
 
   s1.register_next a2, true
   s1.register_next a3, false
@@ -75,7 +85,7 @@ class RailwayCrossing < BaseAct
   #
   # actor registration
   RailwayCrossing.start = a1
-  RailwayCrossing.register_actors a1, a2, a3, a4, a5, a6
+  RailwayCrossing.register_actors a1, a2, a3, a4, a5, a6, a7
   RailwayCrossing.register_actors s1, s2, s3
 
 end
