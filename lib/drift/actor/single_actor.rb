@@ -8,14 +8,17 @@ module Drift
     @@activity_seq = 0
     @@self_id_seq = 1
     @@async_seq = 2
+    @@queue_seq = 3
 
     #args:
     # single_activity class
     # actor id (String)
     # async as boolean
+    # queue name
     def initialize(*args)
       if args.length > 0
         create_metadata(args[@@activity_seq], args[@@self_id_seq], args[@@async_seq])
+        @queue_name = args[@@queue_seq]
       end
     end
 

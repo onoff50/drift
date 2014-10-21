@@ -2,7 +2,7 @@ module Drift
   class BaseActor
     include Sidekiq::Worker
 
-    attr_accessor :metadata
+    attr_accessor :metadata, :queue_name
 
     def initialize
       raise DriftException, 'BaseActor not supposed to be initialized'
@@ -10,7 +10,7 @@ module Drift
 
     def execute context
       if async?
-        self.class.perform_async context, @metadata
+        self.class.perform_async context, @metadata, @queue_name
       else
         perform context
       end

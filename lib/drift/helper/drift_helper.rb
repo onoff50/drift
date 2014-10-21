@@ -1,11 +1,11 @@
 module DriftHelper
 
-  def single_actor(activity, async = false)
-    SingleActor.new(activity, generate_id, async)
+  def single_actor(activity, async = false, queue = 'default')
+    SingleActor.new(activity, generate_id, async, queue)
   end
 
-  def switch_actor(condition, async = false)
-    SwitchActor.new(condition, generate_id, async)
+  def switch_actor(condition, async = false, queue = 'default')
+    SwitchActor.new(condition, generate_id, async, queue)
   end
 
   private

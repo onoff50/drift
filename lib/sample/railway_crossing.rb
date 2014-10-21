@@ -53,11 +53,11 @@ class RailwayCrossing < BaseAct
   #
   # actor definition
   a1 = single_actor LookLeft
-  a2 = single_actor WaitForTrain
-  a3 = single_actor LookRight
-  a4 = single_actor LookRight
-  a5 = single_actor WaitForTrain
-  a6 = single_actor CrossNow
+  a2 = single_actor WaitForTrain, true, 'queue1'
+  a3 = single_actor LookRight, true, 'queue2'
+  a4 = single_actor LookRight, true, 'queue3'
+  a5 = single_actor WaitForTrain, true, 'queue4'
+  a6 = single_actor CrossNow, true, 'queue5'
 
   a7 = single_actor SayHi, false
 
