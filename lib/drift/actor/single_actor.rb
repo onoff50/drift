@@ -1,34 +1,39 @@
+require_relative 'base_actor'
+require_relative '../metadata/single_actor_metadata'
+
 module Drift
 
   class SingleActor < BaseActor
 
+    @@activity_seq = 0
+    @@self_id_seq = 1
+    @@async_seq = 2
+
     #args:
     # single_activity class
-    # act class name
     # actor id (String)
     # async as boolean
     def initialize(*args)
       if args.length > 0
-        raise DriftException, 'args[0] should be an Activity Class' unless args[0].is_a? Class
-        create_metadata(args[0], args[1], args[2], args[3])
+        create_metadata(args[@@activity_seq], args[@@self_id_seq], args[@@async_seq])
       end
     end
 
     def do_action(context)
-      single_activity.perform(context)
-      single_activity
+      activity.perform(context)
+      nil
     end
 
     private
-    def create_metadata(single_activity, act_name, id, async)
+    def create_metadata(activity, id, async)
       @metadata = SingleActorMetadata.new
-      register_base_actor_metadata(act_name, id, async)
-      @metadata.single_activity = single_activity
+      register_base_actor_metadata(id, async)
+      @metadata.activity = activity
     end
 
     private
-    def single_activity
-      @metadata.single_activity
+    def activity
+      @metadata.activity
     end
 
   end

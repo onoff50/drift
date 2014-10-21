@@ -25,16 +25,22 @@ end
 
 class NoodlePreparation < BaseAct
 
-  a1 = single_actor(AddWater, self.name, 0)
-  a2 = single_actor(AddNoodles, self.name, 1)
-  a3 = single_actor(AddSpices, self.name, 2)
-  a4 = single_actor(CookForFiveMins, self.name, 3)
+  #
+  # actor definition
+  a1 = single_actor AddWater
+  a2 = single_actor AddNoodles
+  a3 = single_actor AddSpices
+  a4 = single_actor CookForFiveMins
 
+  #
+  # actor registration
   NoodlePreparation.start = a1
   NoodlePreparation.register_actors a1, a2, a3, a4
 
-  a1.register_next_actor a2
-  a2.register_next_actor a3
-  a3.register_next_actor a4
+  #
+  # next actor registration
+  a1.register_next a2
+  a2.register_next a3
+  a3.register_next a4
 
 end

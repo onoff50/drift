@@ -1,22 +1,13 @@
 require 'sidekiq'
 require 'json'
 require 'sourcify'
-require 'singleton'
 
 require_relative 'drift/version'
 
 require_relative 'drift/activity/base_activity'
 
-require_relative 'drift/actor/base_actor'
 require_relative 'drift/actor/single_actor'
-require_relative 'drift/actor/condition_actor'
 require_relative 'drift/actor/switch_actor'
-
-require_relative 'drift/metadata/act_metadata'
-require_relative 'drift/metadata/actor_metadata'
-require_relative 'drift/metadata/conditional_actor_metadata'
-require_relative 'drift/metadata/single_actor_metadata'
-require_relative 'drift/metadata/switch_actor_metadata'
 
 require_relative 'drift/context/base_context'
 

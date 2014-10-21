@@ -43,17 +43,40 @@ class RailwayCrossing < BaseAct
     ctx['train_on_right']
   end
 
-  a1 = single_actor(LookLeft, self.name, 'look_left')
-  a2 = condition_actor(WaitForTrain, LookRight, condition1, self.name, 10, true)
-  a3 = condition_actor(LookRight, nil, condition2, self.name, 2)
-  a4 = condition_actor(WaitForTrain, CrossNow, condition3, self.name, 3)
+  #
+  # actor definition
+  a1 = single_actor LookLeft
+  a2 = single_actor WaitForTrain
+  a3 = single_actor LookRight
+  a4 = single_actor LookRight
+  a5 = single_actor WaitForTrain
+  a6 = single_actor CrossNow
 
+  s1 = switch_actor condition1
+  s2 = switch_actor condition2
+  s3 = switch_actor condition3
+
+  #
+  # next actor registration
+  a1.register_next s1
+
+  s1.register_next a2, true
+  s1.register_next a3, false
+
+  a2.register_next s2
+
+  s2.register_next a4, true
+
+  a3.register_next s3
+
+  s3.register_next a5, true
+  s3.register_next a6, false
+
+  #
+  # actor registration
   RailwayCrossing.start = a1
-  RailwayCrossing.register_actors a1, a2, a3, a4
-
-  a1.register_next_actor(a2)
-  a2.register_next_actor(a3, 'WaitForTrain')
-  a2.register_next_actor(a4, 'LookRight')
+  RailwayCrossing.register_actors a1, a2, a3, a4, a5, a6
+  RailwayCrossing.register_actors s1, s2, s3
 
 end
 

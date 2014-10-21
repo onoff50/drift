@@ -42,14 +42,32 @@ class Segregate < BaseAct
     ["supplier_return","liquidate","refurbish"][Random.rand(512)%3]
   end
 
-  a1 = single_actor(FetchData, self.name, 0)
-  a2 = switch_actor({"supplier_return" => SupplierReturn, "liquidate" => Liquidate, "refurbish" => Refurbish}, c1, self.name, 1)
-  a3 = single_actor(WriteAuditLogs, self.name, 2)
+  #
+  # actor definition
+  a1 = single_actor FetchData
+  a2 = single_actor SupplierReturn
+  a3 = single_actor Liquidate
+  a4 = single_actor Refurbish
+  a5 = single_actor WriteAuditLogs
 
+  s1 = switch_actor c1
+
+  #
+  # actor registration
   Segregate.start = a1
-  Segregate.register_actors a1, a2, a3
+  Segregate.register_actors a1, a2, a3, a4, a5
+  Segregate.register_actors s1
 
-  a1.register_next_actor a2
-  a2.register_next_actor a3
+  #
+  # next actor registration
+  a1.register_next s1
+
+  s1.register_next a2, "supplier_return"
+  s1.register_next a3, "liquidate"
+  s1.register_next a4, "refurbish"
+
+  a2.register_next a5
+  a3.register_next a5
+  a4.register_next a5
 
 end

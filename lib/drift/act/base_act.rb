@@ -1,3 +1,5 @@
+require_relative '../metadata/act_metadata'
+
 module Drift
 
   class BaseAct
@@ -23,6 +25,7 @@ module Drift
       def register_actors(*actors)
         @act_metadata = ActMetadata.new if @act_metadata.nil?
         actors.each do |actor|
+          actor.act_name = self.name
           @act_metadata.register_actor actor
         end
       end

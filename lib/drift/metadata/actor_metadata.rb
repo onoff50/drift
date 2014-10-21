@@ -11,16 +11,15 @@ module Drift
 
     #args:
     # actor object
-    # activity class name
-    def register_next_actor(actor, activity = 'default')
-      raise DriftException, 'no next actor registration for null activity' if activity.nil?
-      @next_actor_map[activity.to_sym] = actor.id
+    # block value
+    def register_next_actor(actor, value = nil)
+      @next_actor_map[value] = actor.id
     end
 
     #args:
-    # activity class name
-    def next_actor(activity = 'default')
-      @next_actor_map[activity.nil? ? nil : activity.name.to_sym] || @next_actor_map[:default]
+    # block value
+    def next_actor(value = nil)
+      @next_actor_map[value] || @next_actor_map[nil]
     end
 
     def to_json(*args)

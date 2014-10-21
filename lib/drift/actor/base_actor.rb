@@ -20,20 +20,24 @@ module Drift
       @metadata = metadata unless metadata.nil?
 
       pre_action context
-      activity = do_action context
-      post_action context, activity
+      block_val = do_action context
+      post_action context, block_val
       context
     end
 
     #args:
     # actor object
-    # activity class name
-    def register_next_actor(actor, activity_name = 'default')
-      @metadata.register_next_actor actor, activity_name
+    # block value
+    def register_next(actor, value = nil)
+      @metadata.register_next_actor actor, value
     end
 
     def id
       @metadata.id
+    end
+
+    def act_name=(act_class_name)
+      @metadata.act_name = act_class_name
     end
 
     protected
@@ -42,8 +46,7 @@ module Drift
     end
 
     protected
-    def register_base_actor_metadata(act_name, id, async)
-      @metadata.act_name = act_name
+    def register_base_actor_metadata(id, async)
       @metadata.id = id
       @metadata.async = async
     end
@@ -53,8 +56,8 @@ module Drift
       #implement if required
     end
 
-    def post_action(context, activity)
-      next_actor = @metadata.next_actor activity
+    def post_action(context, block_val)
+      next_actor = @metadata.next_actor block_val
       act_class.execute_next next_actor, context unless next_actor.nil?
     end
 

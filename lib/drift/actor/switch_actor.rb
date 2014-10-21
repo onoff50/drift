@@ -1,57 +1,42 @@
+require_relative 'base_actor'
+require_relative '../metadata/switch_actor_metadata'
+
 module Drift
 
   class SwitchActor < BaseActor
 
+    @@condition_seq = 0
+    @@self_id_seq = 1
+    @@async_seq = 2
+
     #args:
-    # activities hash ['key' => Activity Class]
     # condition code block
     # act class name
     # actor id (String)
     # async as boolean
     def initialize(*args)
       if args.length > 0
-        validate_activity_list_arg args[0]
-        create_metadata(args[0], args[1], args[2], args[3], args[4])
+        create_metadata(args[@@condition_seq], args[@@self_id_seq], args[@@async_seq])
       end
     end
 
     def do_action(context)
-      val = condition.call(context)
-      activity = activities[val]
-
-      if activity.nil?
-        activity = activities[:default]
-        raise DriftException, "No default activity found for switch val = #{val}" if activity.nil?
-      end
-
-      activity.perform(context)
-      activity
+      condition.call(context)
     end
 
-    private
-    def create_metadata(activities, condition, act_name, id, async)
-      @metadata = SwitchActorMetadata.new
-      register_base_actor_metadata(act_name, id, async)
-      @metadata.activities = activities
-      @metadata.condition = condition
-    end
-
-    private
-    def activities
-      @metadata.activities
-    end
-
-    private
     def condition
       @metadata.condition
     end
 
+    def condition=(sample_condition)
+      @metadata.condition = sample_condition
+    end
+
     private
-    def validate_activity_list_arg arg_list
-      raise DriftException, 'args[0] should be an Activity Class Hash' unless arg_list.is_a? Hash
-      arg_list.each do |key, activity|
-        raise DriftException, "args[0][#{key}] should be an Activity Class" unless activity.is_a? Class
-      end
+    def create_metadata(condition, id, async)
+      @metadata = SwitchActorMetadata.new
+      register_base_actor_metadata(id, async)
+      @metadata.condition = condition
     end
 
   end

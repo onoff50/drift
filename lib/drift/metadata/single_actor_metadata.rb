@@ -1,12 +1,10 @@
+require_relative 'actor_metadata'
+
 module Drift
 
   class SingleActorMetadata < ActorMetadata
 
-    attr_accessor :single_activity
-
-    def initialize
-      super
-    end
+    attr_accessor :activity
 
     def to_json(*args)
       {
@@ -15,7 +13,7 @@ module Drift
               'next_actor_map' => @next_actor_map,
               'async' => @async,
               'id' => @id,
-              'single_activity' => @single_activity,
+              'activity' => @activity,
               'act_name' => @act_name
           }
       }.to_json(*args)
@@ -26,7 +24,7 @@ module Drift
       obj.next_actor_map = json_data_hash['next_actor_map']
       obj.async = json_data_hash['async']
       obj.id = json_data_hash['id']
-      obj.single_activity = json_data_hash['single_activity']
+      obj.activity = json_data_hash['activity']
       obj.act_name = json_data_hash['act_name']
       obj
     end

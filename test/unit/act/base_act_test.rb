@@ -3,9 +3,9 @@ require File.expand_path(File.dirname(__FILE__) + '/../base_drift_test')
 class BaseActTest < BaseDriftTest
   include Drift
   setup do
-    a1 = single_actor(AddWater, BaseAct.name, 10)
-    a2 = single_actor(AddNoodles, BaseAct.name, 20)
-    a1.register_next_actor(a2)
+    a1 = single_actor AddWater
+    a2 = single_actor AddNoodles
+    a1.register_next a2
 
     BaseAct.start = a1
     BaseAct.register_actors a1, a2
