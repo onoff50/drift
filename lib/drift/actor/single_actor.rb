@@ -17,8 +17,7 @@ module Drift
     # queue name
     def initialize(*args)
       if args.length > 0
-        create_metadata(args[ACTIVITY_SEQ], args[SELF_ID_SEQ], args[ASYNC_SEQ])
-        @queue_name = args[QUEUE_SEQ]
+        create_metadata(args[ACTIVITY_SEQ], args[SELF_ID_SEQ], args[ASYNC_SEQ], args[QUEUE_SEQ])
       end
     end
 
@@ -28,9 +27,9 @@ module Drift
     end
 
     private
-    def create_metadata(activity, id, async)
+    def create_metadata(activity, id, async, queue_name)
       @metadata = SingleActorMetadata.new
-      register_base_actor_metadata(id, async)
+      register_base_actor_metadata(id, async, queue_name)
       @metadata.activity = activity
     end
 
