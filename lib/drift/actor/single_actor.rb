@@ -5,10 +5,10 @@ module Drift
 
   class SingleActor < BaseActor
 
-    @@activity_seq = 0
-    @@self_id_seq = 1
-    @@async_seq = 2
-    @@queue_seq = 3
+    ACTIVITY_SEQ = 0
+    SELF_ID_SEQ = 1
+    ASYNC_SEQ = 2
+    QUEUE_SEQ = 3
 
     #args:
     # single_activity class
@@ -17,8 +17,8 @@ module Drift
     # queue name
     def initialize(*args)
       if args.length > 0
-        create_metadata(args[@@activity_seq], args[@@self_id_seq], args[@@async_seq])
-        @queue_name = args[@@queue_seq]
+        create_metadata(args[ACTIVITY_SEQ], args[SELF_ID_SEQ], args[ASYNC_SEQ])
+        @queue_name = args[QUEUE_SEQ]
       end
     end
 
