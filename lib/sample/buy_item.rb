@@ -55,6 +55,11 @@ class NoOffer < BaseActivity
   end
 end
 
+class DefaultOffer < BaseActivity
+  def self.do_execute(context)
+    context['default_offer'] = true
+  end
+end
 
 
 class BuyItem < BaseAct
@@ -70,10 +75,11 @@ class BuyItem < BaseAct
   net_banking = single_actor(NetBankingOffer)
   credit_card = single_actor(CreditCardOffer)
   no_offer = single_actor(NoOffer)
+  default_offer = single_actor(DefaultOffer)
   apply_offer = single_actor(ApplyOffer)
 
   self.start = add_to_cart
-  self.register_actors(add_to_cart, checkout, get_offer, gift_voucher, net_banking, credit_card, no_offer, apply_offer)
+  self.register_actors(add_to_cart, checkout, get_offer, gift_voucher, net_banking, credit_card, no_offer, default_offer, apply_offer)
 
   add_to_cart.register_next(checkout)
   checkout.register_next(get_offer)
@@ -82,6 +88,7 @@ class BuyItem < BaseAct
   get_offer.register_next(net_banking, 'NETBANKING')
   get_offer.register_next(credit_card, 'CREDIT_CARD')
   get_offer.register_next(no_offer, 'OTHER')
+  get_offer.register_next(default_offer)
 
   gift_voucher.register_next(apply_offer)
   net_banking.register_next(apply_offer)
