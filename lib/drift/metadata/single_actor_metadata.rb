@@ -14,7 +14,8 @@ module Drift
               'async' => @async,
               'id' => @id,
               'activity' => @activity,
-              'act_name' => @act_name
+              'act_name' => @act_name,
+              'queue_name' => @queue_name
           }
       }.to_json(*args)
     end
@@ -26,6 +27,7 @@ module Drift
       obj.id = json_data_hash['id']
       obj.activity = json_data_hash['activity']
       obj.act_name = json_data_hash['act_name']
+      obj.queue_name = json_data_hash['queue_name']
       obj
     end
 
