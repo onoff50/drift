@@ -14,12 +14,12 @@ module Drift
 
       def pre_activity(context)
         $logger.info "Entering #{self.name} Activity."
-        $logger.info "INPUT #{context}"
+        $logger.info "INPUT #{context.inspect}"
       end
 
       def post_activity(context)
         $logger.info "Exiting #{self.name} Activity."
-        $logger.info "OUTPUT #{context}"
+        $logger.info "OUTPUT #{context.inspect}"
       end
 
       def do_execute(context)
