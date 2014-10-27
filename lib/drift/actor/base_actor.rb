@@ -20,8 +20,14 @@ module Drift
       @metadata = metadata unless metadata.nil?
 
       pre_action context
-      block_val = do_action context
-      post_action context, block_val
+      begin
+        block_val = do_action context
+      rescue DriftException
+        perform_rollback context
+      else
+        post_action context, block_val
+      end
+
       context
     end
 
@@ -38,6 +44,12 @@ module Drift
       actors.each do |actor|
         @metadata.register_side_actor actor
       end
+    end
+
+    #args:
+    # actor object
+    def register_rollback(actor)
+      @metadata.register_rollback_actor actor
     end
 
     def id
@@ -72,6 +84,11 @@ module Drift
 
       next_actor = @metadata.next_actor block_val
       act_class.execute_next next_actor, context unless next_actor.nil?
+    end
+
+    def perform_rollback(context)
+      act_class.execute_next @metadata.rollback_actor, context unless @metadata.rollback_actor.nil?
+      raise DriftException, "actor #{self.class.name} failed with context #{context.inspect}"
     end
 
     def async?
