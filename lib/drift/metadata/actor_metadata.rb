@@ -41,6 +41,15 @@ module Drift
     end
 
     def to_json(*args)
+      to_json_base_hash.to_json(*args)
+    end
+
+    def self.json_create(json_data_hash)
+      json_populate_base_attributes(new, json_data_hash)
+    end
+
+    protected
+    def to_json_base_hash
       {
           'json_class'   => self.class.name,
           'data' => {
@@ -52,11 +61,11 @@ module Drift
               'act_name' => @act_name,
               'queue_name' => @queue_name
           }
-      }.to_json(*args)
+      }
     end
 
-    def self.json_create(json_data_hash)
-      obj = new()
+    protected
+    def self.json_populate_base_attributes(obj, json_data_hash)
       obj.next_actor_map = json_data_hash['next_actor_map']
       obj.side_actor_list = json_data_hash['side_actor_list']
       obj.rollback_actor = json_data_hash['rollback_actor']
