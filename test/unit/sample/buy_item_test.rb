@@ -8,7 +8,7 @@ class BuyItemTest < BaseDriftTest
     @context = BaseContext.new({'selling_price' => 100, 'quantity' => 1, 'payment_method' => 'CREDIT_CARD'})
   end
 
-  def xtest_all_actors_called
+  def test_all_actors_called
     AddItemToCart.expects(:perform)
     Checkout.expects(:perform)
     ApplyOffer.expects(:perform)
@@ -44,6 +44,12 @@ class BuyItemTest < BaseDriftTest
     assert_equal 0, @context['discount_percentage']
     assert_true @context['checkout']
     assert_equal 100, @context['payable_amount']
+  end
+
+  def test_non_existing_offer
+    @context['payment_method'] = 'SOMEOTHER'
+    BuyItem.execute(@context)
+    assert_true @context['default_offer']
   end
 
 end
