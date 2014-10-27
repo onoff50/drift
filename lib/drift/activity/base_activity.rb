@@ -7,9 +7,13 @@ module Drift
       undef_method :new
 
       def perform(context)
-        pre_activity context
-        do_execute context
-        post_activity context
+        begin
+          pre_activity context
+          do_execute context
+          post_activity context
+        rescue Exception
+          raise DriftException
+        end
       end
 
       def pre_activity(context)
