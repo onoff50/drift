@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://flo-gem-repo.nm.flipkart.com'
 
 # Specify your gem's dependencies in drift.gemspec
 gemspec
@@ -11,9 +11,7 @@ group :test do
   gem 'mocha', '0.10.5'
   gem 'shoulda'
   gem 'shoulda-matchers'
-  #gem 'factory_girl'
   gem 'shoulda-context'
-  gem 'activerecord'
+  gem 'activerecord', '3.1.3.patched'
   gem 'sidekiq'
-  gem 'rest-client'
 end
