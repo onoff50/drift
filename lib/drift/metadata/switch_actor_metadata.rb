@@ -8,7 +8,7 @@ module Drift
 
     def to_json(*args)
       json_hash = to_json_base_hash
-      json_hash.merge!('condition' => @condition.to_source)
+      json_hash['data'].merge!('condition' => @condition.to_source)
       json_hash.to_json(*args)
     end
 

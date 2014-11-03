@@ -10,7 +10,7 @@ module Drift
 
     def execute context
       if async?
-        self.class.perform_async context, @metadata, queue_name
+        self.class.perform_async context, @metadata
       else
         perform context
       end
