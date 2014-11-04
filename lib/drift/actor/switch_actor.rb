@@ -25,6 +25,10 @@ module Drift
       condition.call(context)
     end
 
+    def identity
+      @metadata.condition.to_source
+    end
+
     def condition
       @metadata.condition
     end

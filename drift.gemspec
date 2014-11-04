@@ -15,4 +15,6 @@ Gem::Specification.new do |gem|
   gem.version       = Drift::VERSION
   gem.add_dependency('sidekiq', '~> 3.2.6', '>= 3.2.6')
   gem.add_dependency('sourcify', '~> 0.5', '>= 0.5.0')
+  gem.add_dependency('graphviz', '~> 0.1.0', '>= 0.1.0')
+  gem.add_dependency('ruby-graphviz', '~> 1.2.1', '>= 1.2.1')
 end

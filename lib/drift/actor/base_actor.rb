@@ -8,6 +8,10 @@ module Drift
       raise DriftException, 'BaseActor not supposed to be initialized'
     end
 
+    def identity
+      raise DriftException, 'BaseActor can not be identified'
+    end
+
     def execute context
       if async?
         self.class.perform_async context, @metadata

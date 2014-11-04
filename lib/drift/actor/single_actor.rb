@@ -26,6 +26,10 @@ module Drift
       nil
     end
 
+    def identity
+      @metadata.activity.name
+    end
+
     private
     def create_metadata(activity, id, async, queue_name)
       @metadata = SingleActorMetadata.new
