@@ -11,7 +11,7 @@ module Drift
     QUEUE_SEQ = 3
 
     #args:
-    # condition code block
+    # condition class
     # actor id (String)
     # async as boolean
     # queue name
@@ -22,11 +22,11 @@ module Drift
     end
 
     def do_action(context)
-      condition.call(context)
+      condition.eval_condition(context)
     end
 
     def identity
-      @metadata.condition.to_source
+      condition.name
     end
 
     def condition

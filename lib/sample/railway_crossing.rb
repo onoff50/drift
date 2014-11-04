@@ -35,20 +35,25 @@ class SayHi < BaseActivity
   end
 end
 
+class CheckTrainOnLeft < BaseCondition
+  def self.eval_condition(context)
+    context['train_on_left']
+  end
+end
+
+class CheckTrainOnRight < BaseCondition
+  def self.eval_condition(context)
+    context['train_on_right']
+  end
+end
+
+class CheckIfWait < BaseCondition
+  def self.eval_condition(context)
+    context['wait']
+  end
+end
 
 class RailwayCrossing < BaseAct
-
-  condition1 = Proc.new do |ctx|
-    ctx['train_on_left']
-  end
-
-  condition2 = Proc.new do |ctx|
-    ctx['wait']
-  end
-
-  condition3 = Proc.new do |ctx|
-    ctx['train_on_right']
-  end
 
   #
   # actor definition
@@ -61,9 +66,9 @@ class RailwayCrossing < BaseAct
 
   a7 = single_actor SayHi, false
 
-  s1 = switch_actor condition1
-  s2 = switch_actor condition2
-  s3 = switch_actor condition3
+  s1 = switch_actor CheckTrainOnLeft
+  s2 = switch_actor CheckIfWait
+  s3 = switch_actor CheckTrainOnRight
 
   #
   # next actor registration
@@ -84,9 +89,9 @@ class RailwayCrossing < BaseAct
 
   #
   # actor registration
-  RailwayCrossing.start = a1
-  RailwayCrossing.register_actors a1, a2, a3, a4, a5, a6, a7
-  RailwayCrossing.register_actors s1, s2, s3
+  self.start = a1
+  self.register_actors a1, a2, a3, a4, a5, a6, a7
+  self.register_actors s1, s2, s3
 
 end
 

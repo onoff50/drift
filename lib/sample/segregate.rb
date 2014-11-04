@@ -36,12 +36,13 @@ class WriteAuditLogs < BaseActivity
   end
 end
 
-
-class Segregate < BaseAct
-  c1 = Proc.new do
+class CheckBulk < BaseCondition
+  def self.eval_condition(context)
     ["supplier_return","liquidate","refurbish"][Random.rand(512)%3]
   end
+end
 
+class Segregate < BaseAct
   #
   # actor definition
   a1 = single_actor FetchData
@@ -50,13 +51,13 @@ class Segregate < BaseAct
   a4 = single_actor Refurbish
   a5 = single_actor WriteAuditLogs
 
-  s1 = switch_actor c1
+  s1 = switch_actor CheckBulk
 
   #
   # actor registration
-  Segregate.start = a1
-  Segregate.register_actors a1, a2, a3, a4, a5
-  Segregate.register_actors s1
+  self.start = a1
+  self.register_actors a1, a2, a3, a4, a5
+  self.register_actors s1
 
   #
   # next actor registration

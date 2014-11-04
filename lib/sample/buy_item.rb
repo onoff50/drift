@@ -61,16 +61,17 @@ class DefaultOffer < BaseActivity
   end
 end
 
-
-class BuyItem < BaseAct
-  condition1 = Proc.new do |context|
+class CheckPaymentMethod < BaseCondition
+  def self.eval_condition(context)
     context['payment_method']
   end
+end
 
 
+class BuyItem < BaseAct
   add_to_cart = single_actor(AddItemToCart)
   checkout = single_actor(Checkout)
-  get_offer = switch_actor(condition1)
+  get_offer = switch_actor(CheckPaymentMethod)
   gift_voucher = single_actor(GiftVoucherOffer)
   net_banking = single_actor(NetBankingOffer)
   credit_card = single_actor(CreditCardOffer)

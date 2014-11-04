@@ -27,7 +27,7 @@ module Drift
     end
 
     def identity
-      @metadata.activity.name
+      activity.name
     end
 
     private

@@ -1,10 +1,28 @@
 require File.expand_path(File.dirname(__FILE__) + '/../base_drift_test')
 
+class CheckContextBeta < BaseCondition
+  def self.eval_condition(context)
+    'beta'
+  end
+end
+
+class CheckContextOther < BaseCondition
+  def self.eval_condition(context)
+    'other'
+  end
+end
+
+class CheckContextDefault < BaseCondition
+  def self.eval_condition(context)
+    :default
+  end
+end
+
 class SwitchActorTest < BaseDriftTest
   include Drift
 
   setup do
-    @switch_actor = switch_actor Proc.new {}
+    @switch_actor = switch_actor NilClass
 
     add_water = single_actor AddWater
     add_noodles = single_actor AddNoodles
@@ -20,7 +38,7 @@ class SwitchActorTest < BaseDriftTest
   end
 
   def test_switching_action_act_on_2_for_beta
-    @switch_actor.condition = Proc.new {'beta'}
+    @switch_actor.condition = CheckContextBeta
     a = @switch_actor.execute(BaseContext.new({}))
 
     assert_equal 'Added maggie noodles', a['noodles']
@@ -29,7 +47,7 @@ class SwitchActorTest < BaseDriftTest
   end
 
   def test_switching_action_act_on_4_for_other
-    @switch_actor.condition = Proc.new {'other'}
+    @switch_actor.condition = CheckContextOther
     a = @switch_actor.execute(BaseContext.new({}))
 
     assert_equal 'Cook on gas for five minutes', a['cook']
@@ -39,7 +57,7 @@ class SwitchActorTest < BaseDriftTest
   end
 
   def test_switching_action_act_on_4_for_default
-    @switch_actor.condition = Proc.new {:default}
+    @switch_actor.condition = CheckContextDefault
     a = @switch_actor.execute(BaseContext.new({}))
 
     assert_equal 'Cook on gas for five minutes', a['cook']

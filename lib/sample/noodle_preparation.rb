@@ -34,8 +34,8 @@ class NoodlePreparation < BaseAct
 
   #
   # actor registration
-  NoodlePreparation.start = a1
-  NoodlePreparation.register_actors a1, a2, a3, a4
+  self.start = a1
+  self.register_actors a1, a2, a3, a4
 
   #
   # next actor registration

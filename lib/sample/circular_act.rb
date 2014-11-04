@@ -14,14 +14,16 @@ class Printer < BaseActivity
   end
 end
 
-
-class CircularAct < BaseAct
-  condition = Proc.new do |context|
+class CheckLimit < BaseCondition
+  def self.eval_condition(context)
     context['number'] >= context['limit']
   end
+end
+
+class CircularAct < BaseAct
 
   a1 = single_actor(Increment)
-  s1 = switch_actor(condition)
+  s1 = switch_actor(CheckLimit)
   a2 = single_actor(Printer)
 
   self.start = a1

@@ -6,6 +6,8 @@ require_relative 'drift/version'
 
 require_relative 'drift/activity/base_activity'
 
+require_relative 'drift/condition/base_condition'
+
 require_relative 'drift/actor/single_actor'
 require_relative 'drift/actor/switch_actor'
 
