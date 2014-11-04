@@ -18,4 +18,8 @@ class GenerateDiagramTest < BaseDriftTest
     BuyItem.generate_act_diagram File.expand_path('../../../lib/sample/diagrams', File.dirname(__FILE__))
   end
 
+  def test_generate_noodle_preparation_act_diagram
+    NoodlePreparation.generate_act_diagram File.expand_path('../../../lib/sample/diagrams', File.dirname(__FILE__))
+  end
+
 end
