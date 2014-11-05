@@ -1,0 +1,4 @@
+adapter: mysql2
+database: drift_test
+username: root
+password:

@@ -1,20 +1,19 @@
+require 'uuid'
+
 module DriftHelper
 
-  def single_actor(activity, async = false, queue = 'default')
+  # todo exception for sync task defined with queue name
+  def single_actor(activity, async = false, queue = nil)
     SingleActor.new(activity, generate_id, async, queue)
   end
 
-  def switch_actor(condition, async = false, queue = 'default')
+  def switch_actor(condition, async = false, queue = nil)
     SwitchActor.new(condition, generate_id, async, queue)
   end
 
   private
   def generate_id
-    t = Time.now.utc
-    time = t.strftime('%Y%m%d-%H%M%S')
-
-    x = "#{rand}!#{time}"
-    Digest::MD5.hexdigest(x)
+    UUID.new.generate
   end
 
 end

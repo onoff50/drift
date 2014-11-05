@@ -90,8 +90,8 @@ class RailwayCrossing < BaseAct
   #
   # actor registration
   self.start = a1
-  self.register_actors a1, a2, a3, a4, a5, a6, a7
-  self.register_actors s1, s2, s3
+  self.register_actors a1, a2, a3, a4, a5, a6, a7 #registering all single actors
+  self.register_actors s1, s2, s3  #registering all switch actors
 
 end
 
