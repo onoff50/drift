@@ -1,6 +1,8 @@
+require_relative '../../../lib/drift/worker'
+
 module Drift
   class BaseActor
-    include Sidekiq::Worker
+    include Drift::Worker
 
     attr_accessor :metadata
 
@@ -12,9 +14,9 @@ module Drift
       raise DriftException, 'BaseActor can not be identified'
     end
 
-    def execute context
+    def execute(context)
       if async?
-        self.class.perform_async context, @metadata
+        self.class.perform_async context, @metadata.act_name, @metadata.id, @metadata.queue_name
       else
         perform context
       end
@@ -83,15 +85,15 @@ module Drift
 
     def post_action(context, block_val)
       @metadata.side_actor_list.each do |side_actor|
-        act_class.execute_next side_actor, context
+        act_class.execute_actor side_actor, context
       end
 
       next_actor = @metadata.next_actor block_val
-      act_class.execute_next next_actor, context unless next_actor.nil?
+      act_class.execute_actor next_actor, context unless next_actor.nil?
     end
 
     def perform_rollback(context)
-      act_class.execute_next @metadata.rollback_actor, context unless @metadata.rollback_actor.nil?
+      act_class.execute_actor @metadata.rollback_actor, context unless @metadata.rollback_actor.nil?
       raise DriftException, "actor #{self.class.name} failed with context #{context.inspect}"
     end
 

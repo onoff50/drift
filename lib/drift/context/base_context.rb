@@ -22,7 +22,7 @@ module Drift
     end
 
     def to_json(*args)
-       @context.to_json(*args)
+      @context.to_json(*args)
     end
 
     def self.json_create args

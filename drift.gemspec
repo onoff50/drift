@@ -8,13 +8,12 @@ Gem::Specification.new do |gem|
   gem.summary       = "Return flow configuration"
 
   gem.files         = `git ls-files`.split($\)
-  #gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "drift"
   gem.require_paths = ["lib"]
   gem.version       = Drift::VERSION
-  gem.add_dependency('sidekiq', '~> 3.2.6', '>= 3.2.6')
-  gem.add_dependency('sourcify', '~> 0.5', '>= 0.5.0')
+  gem.add_dependency('activesupport', '~> 3.1.3', '>= 3.1.3')
   gem.add_dependency('graphviz', '~> 0.1.0', '>= 0.1.0')
   gem.add_dependency('ruby-graphviz', '~> 1.2.1', '>= 1.2.1')
+  gem.add_dependency('sc-mq', '~> 0.1.3.lock', '>= 0.1.3.lock')
 end

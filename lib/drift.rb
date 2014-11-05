@@ -1,6 +1,5 @@
-require 'sidekiq'
 require 'json'
-require 'sourcify'
+require 'active_support'
 
 require_relative 'drift/version'
 
@@ -21,52 +20,17 @@ require_relative 'drift/exception/drift_exception'
 
 require_relative 'drift/config/database'
 
-require_relative 'drift/middleware/server_middleware'
-require_relative 'drift/middleware/client_middleware'
-
 $logger = (defined? logger) ? logger : Logger.new(STDOUT)
 
-Sidekiq.configure_server do |config|
-  $logger.info 'INITIALIZING REDIS'
-  config.redis = { namespace:  'drift', size: 25,url: "redis://#{DB_DEFAULTS[:host]}:#{DB_DEFAULTS[:port]}/12" }
-
-  config.server_middleware do |chain|
-    chain.add Drift::ServerMiddleware
-  end
-
-  config.client_middleware do |chain|
-    chain.add Drift::ClientMiddleware
-  end
-end
-
-Sidekiq.configure_client do |config|
-  $logger.info 'INITIALIZING REDIS'
-  config.redis = { namespace:  'drift', size: 1, url: "redis://#{DB_DEFAULTS[:host]}:#{DB_DEFAULTS[:port]}/12" }
-
-  config.client_middleware do |chain|
-    chain.add Drift::ClientMiddleware
-  end
-end
-
-module Sidekiq
-
-  def self.load_json(string)
-    class_hash = JSON.parse(string)
-    class_hash_context = class_hash['args'][0]
-    class_hash['args'][0] = Drift::BaseContext.json_create class_hash_context
-    class_hash_metadata = class_hash['args'][1]
-    class_hash['args'][1] = Kernel.const_get(class_hash_metadata['json_class']).json_create(class_hash_metadata['data'])
-    class_hash
-  end
-
-  def self.dump_json(object)
-    JSON.generate(object)
-  end
-
-end
-
-
 module Drift
+
+  def self.default_worker_options=(hash)
+    @default_worker_options = default_worker_options.merge(hash)
+  end
+
+  def self.default_worker_options
+    defined?(@default_worker_options) ? @default_worker_options : {'queue_name' => 'drift_default', 'http_method' => 'POST', 'request_uri' => ''}
+  end
 
 end
 

@@ -5,11 +5,8 @@ require 'shoulda-context'
 require 'shoulda-matchers'
 require 'rack'
 require 'logger'
-#require 'factory_girl'
 require 'active_record'
 require 'json'
-require 'sidekiq'
-require 'sidekiq/testing'
 
 require_relative 'factories'
 
@@ -19,6 +16,8 @@ require_relative '../lib/sample/noodle_preparation'
 require_relative '../lib/sample/segregate'
 require_relative '../lib/sample/buy_item'
 require_relative '../lib/sample/circular_act'
+
+require_relative '../lib/drift/testing'
 
 require File.expand_path(File.dirname(__FILE__) + "/factories")
 

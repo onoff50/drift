@@ -1,8 +1,6 @@
 source 'http://flo-gem-repo.nm.flipkart.com'
 
-# Specify your gem's dependencies in drift.gemspec
 gemspec
-
 
 group :test do
   gem 'rake'
@@ -13,5 +11,4 @@ group :test do
   gem 'shoulda-matchers'
   gem 'shoulda-context'
   gem 'activerecord', '3.1.3.patched'
-  gem 'sidekiq'
 end

@@ -11,7 +11,7 @@ module Drift
       @next_actor_map = {}
       @async = false
       @side_actor_list = []
-      @queue_name = 'default'
+      @queue_name = nil
       @rollback_actor = nil
     end
 
