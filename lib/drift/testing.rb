@@ -74,7 +74,7 @@ module Drift
       private
       def execute_job(payload)
         act_class = Kernel.const_get(payload['act_name'])
-        context = Drift::BaseContext.json_create payload['context']
+        context = Drift::BaseContext.json_create JSON.parse(payload['context'])
         actor = act_class.get_actor payload['actor_id']
         actor.perform context
       end
