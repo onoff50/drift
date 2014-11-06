@@ -29,7 +29,7 @@ module Drift
   end
 
   def self.default_worker_options
-    defined?(@default_worker_options) ? @default_worker_options : {'queue_name' => 'drift_default', 'http_method' => 'POST', 'request_uri' => ''}
+    defined?(@default_worker_options) ? @default_worker_options : {'app_id' => 'drift_default', 'queue_name' => 'drift_default', 'app_uri' => ''}
   end
 
 end

@@ -20,7 +20,7 @@ module Drift
     end
 
     def send_message(payload, group_id)
-      @client.send_message(payload, default_worker_options['http_method'], default_worker_options['request_uri'], nil, nil, nil, nil, nil, group_id)
+      @client.send_message(payload, "POST", "#{default_worker_options['app_uri']}/execute_actor/", nil, nil, nil, nil, nil, group_id)
     end
 
   end
