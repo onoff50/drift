@@ -40,37 +40,44 @@ module Drift
       def generate_act_diagram(path_to_store)
         graph = GraphViz.new(self.name.to_sym)
         start = graph.add_nodes(@start.identity, :shape => "ellipse")
-        add_next_nodes_to_diagram(graph, @start, start, [@start.id])
+        add_next_nodes_to_diagram(graph, @start, start, [@start.id], {@start.id => start})
         graph.output(:png => "#{path_to_store}/#{self.name}.png")
       end
 
       private
-      def add_next_nodes_to_diagram(graph, actor_instance, actor_node, id_list)
+      def add_next_nodes_to_diagram(graph, actor_instance, actor_node, id_list, node_list_hash)
         next_actor_map = actor_instance.metadata.next_actor_map
         next_actor_map.each do |key, next_actor_id|
           next_node = nil
           next_actor = @act_metadata.actor(next_actor_id)
 
           # null actor OR circular act check
-          next if next_actor.nil? || id_list.include?(next_actor.id)
-          id_list << next_actor.id
+          next if next_actor.nil?
 
-          case next_actor
-            when SingleActor
-              next_node = graph.add_nodes(next_actor.identity, :shape => "box")
-            when SwitchActor
-              next_node = graph.add_nodes(next_actor.identity, :shape => "diamond")
-          end
-
-          unless next_node.nil?
-            if key.nil?
-              graph.add_edges(actor_node, next_node)
-            else
-              graph.add_edges(actor_node, next_node, :label => key.to_s)
+          if id_list.include?(next_actor.id)
+            next_node = node_list_hash[next_actor.id]
+          else
+            case next_actor
+              when SingleActor
+                next_node = graph.add_nodes(next_actor.identity, :shape => "box")
+              when SwitchActor
+                next_node = graph.add_nodes(next_actor.identity, :shape => "diamond")
             end
 
-            add_next_nodes_to_diagram(graph, next_actor, next_node, next_actor.id)
+            node_list_hash.merge!({next_actor.id => next_node})
           end
+
+          if key.nil?
+            graph.add_edges(actor_node, next_node)
+          else
+            graph.add_edges(actor_node, next_node, :label => key.to_s)
+          end
+
+          unless id_list.include?(next_actor.id)
+            id_list << next_actor.id
+            add_next_nodes_to_diagram(graph, next_actor, next_node, id_list, node_list_hash)
+          end
+
         end
       end
 
