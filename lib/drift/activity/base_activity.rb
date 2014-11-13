@@ -17,17 +17,17 @@ module Drift
       end
 
       def pre_activity(context)
-        $logger.info "Entering #{self.name} Activity."
-        $logger.info "INPUT #{context.inspect}"
+        $logger.debug "Entering #{self.name} Activity."
+        $logger.debug "INPUT #{context.inspect}"
       end
 
       def post_activity(context)
-        $logger.info "Exiting #{self.name} Activity."
-        $logger.info "OUTPUT #{context.inspect}"
+        $logger.debug "Exiting #{self.name} Activity."
+        $logger.debug "OUTPUT #{context.inspect}"
       end
 
       def do_execute(context)
-        $logger.info "Not Implemented"
+        $logger.error "Not Implemented"
         raise DriftException, "Not Implemented"
       end
 

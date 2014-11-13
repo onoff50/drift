@@ -22,7 +22,7 @@ end
 
 class WaitForTrain < BaseActivity
   def self.do_execute(context)
-    $logger.info 'Waiting for 5 minutes...'
+    $logger.debug 'Waiting for 5 minutes...'
     context['wait']= true
     context['message']= 'Retry after 5 minutes !!'
   end
@@ -30,7 +30,7 @@ end
 
 class SayHi < BaseActivity
   def self.do_execute(context)
-    $logger.info 'Saying Hi...'
+    $logger.debug 'Saying Hi...'
     context['say']= 'hi'
   end
 end

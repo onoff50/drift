@@ -4,13 +4,13 @@ include DriftHelper
 class Increment < BaseActivity
   def self.do_execute(context)
     context['number'] +=1
-    $logger.info "Incremented to #{context['number']}"
+    $logger.debug "Incremented to #{context['number']}"
   end
 end
 
 class Printer < BaseActivity
   def self.do_execute(context)
-    $logger.info "PRINTER"
+    $logger.debug "PRINTER"
   end
 end
 

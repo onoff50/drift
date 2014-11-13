@@ -3,15 +3,15 @@ include Drift
 
 class Liquidate < BaseActivity
   def self.do_execute(context)
-    $logger.info "move inventory into liquidation bulk"
-    $logger.info "Put it into available liquidation shelf"
+    $logger.debug "move inventory into liquidation bulk"
+    $logger.debug "Put it into available liquidation shelf"
   end
 end
 
 class Refurbish < BaseActivity
   def self.do_execute(context)
-    $logger.info "move inventory into refurbish bulk"
-    $logger.info "Put it into available refurbishment shelf"
+    $logger.debug "move inventory into refurbish bulk"
+    $logger.debug "Put it into available refurbishment shelf"
   end
 end
 
@@ -24,14 +24,14 @@ end
 
 class SupplierReturn < BaseActivity
   def self.do_execute(context)
-    $logger.info "move inventory into SupplierReturn bulk"
-    $logger.info "Put it into available SupplierReturn shelf"
+    $logger.debug "move inventory into SupplierReturn bulk"
+    $logger.debug "Put it into available SupplierReturn shelf"
   end
 end
 
 class WriteAuditLogs < BaseActivity
   def self.do_execute(context)
-    $logger.info "update inventory logs of the movement"
+    $logger.debug "update inventory logs of the movement"
     context["audited"] = true
   end
 end

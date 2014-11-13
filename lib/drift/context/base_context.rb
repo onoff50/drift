@@ -12,7 +12,7 @@ module Drift
     end
 
     def []=(key, value)
-      $logger.info "Writing to context KEY = #{key}, VALUE = #{value.inspect}"
+      $logger.debug "Writing to context KEY = #{key}, VALUE = #{value.inspect}"
       raise DriftException, 'Key can not be nil or empty' if (key.nil? || key.empty?)
       @context.merge!(key => value)
     end
