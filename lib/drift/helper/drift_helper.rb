@@ -1,4 +1,4 @@
-require 'uuid'
+require 'uuidtools'
 
 module DriftHelper
 
@@ -13,7 +13,7 @@ module DriftHelper
 
   private
   def generate_id
-    UUID.new.generate
+    UUIDTools::UUID.timestamp_create
   end
 
 end
