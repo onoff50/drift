@@ -18,7 +18,7 @@ require_relative 'drift/helper/drift_helper'
 
 require_relative 'drift/exception/drift_exception'
 
-require_relative 'drift/config/database'
+# require_relative 'drift/config/database'
 
 $logger = (defined? logger) ? logger : Logger.new(STDOUT)
 

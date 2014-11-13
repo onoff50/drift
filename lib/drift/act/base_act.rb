@@ -51,7 +51,7 @@ module Drift
           next_node = nil
           next_actor = @act_metadata.actor(next_actor_id)
 
-          # null actor OR circular act check
+          # null actor check
           next if next_actor.nil?
 
           if id_list.include?(next_actor.id)
@@ -73,6 +73,7 @@ module Drift
             graph.add_edges(actor_node, next_node, :label => key.to_s)
           end
 
+          # circular reference check
           unless id_list.include?(next_actor.id)
             id_list << next_actor.id
             add_next_nodes_to_diagram(graph, next_actor, next_node, id_list, node_list_hash)
