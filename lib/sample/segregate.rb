@@ -1,4 +1,3 @@
-include DriftHelper
 include Drift
 
 class Liquidate < BaseActivity

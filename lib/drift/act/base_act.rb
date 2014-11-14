@@ -1,9 +1,11 @@
 require_relative '../metadata/act_metadata'
 require 'graphviz'
+require_relative '../../../lib/drift/helper/drift_helper'
 
 module Drift
 
   class BaseAct
+    include Drift::DriftHelper
 
     class << self
 

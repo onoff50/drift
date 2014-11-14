@@ -17,6 +17,8 @@ require_relative '../lib/sample/segregate'
 require_relative '../lib/sample/buy_item'
 require_relative '../lib/sample/circular_act'
 
+require_relative '../lib/drift/helper/drift_helper'
+
 require_relative '../lib/drift/testing'
 
 require File.expand_path(File.dirname(__FILE__) + "/factories")

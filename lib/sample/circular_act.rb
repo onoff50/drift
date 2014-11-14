@@ -1,5 +1,4 @@
 include Drift
-include DriftHelper
 
 class Increment < BaseActivity
   def self.do_execute(context)

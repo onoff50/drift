@@ -1,6 +1,4 @@
-#require_relative '../drift'
 include Drift
-include DriftHelper
 
 class AddItemToCart < BaseActivity
   def self.do_execute(context)
