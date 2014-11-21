@@ -25,6 +25,10 @@ module Drift
       @context.to_json(*args)
     end
 
+    def serializable_hash
+      @context.serializable_hash
+    end
+
     def self.json_create args
       new args
     end
